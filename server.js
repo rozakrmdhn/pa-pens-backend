@@ -6,7 +6,7 @@ const dosenRoutes = require('./src/routes/dosenRoutes')
 const init = async () => {
 
     const server = Hapi.server({
-        port: 8080,
+        port: 8081,
         host: 'localhost',
         'routes': {
             'cors': true
