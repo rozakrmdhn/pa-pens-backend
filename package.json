@@ -1,0 +1,21 @@
+{
+  "name": "magang-hapi-backend",
+  "description": "Restful API for Magang Apps PENS",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Abdul Rozak R",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^21.3.3",
+    "@hapi/jwt": "^3.2.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.0.2",
+    "pg": "^8.11.3",
+    "postgres": "^3.4.3"
+  }
+}
