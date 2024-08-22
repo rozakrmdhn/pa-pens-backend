@@ -9,27 +9,27 @@ const {
 const routes = [
     {
         method: 'GET', 
-        path: '/dosen', 
+        path: '', 
         handler: getAllDosen,
     },
     {
         method: 'GET',
-        path: '/dosen/{id}',
+        path: '/{id}',
         handler: getDosenById,
     },
     {
         method: 'DELETE',
-        path: '/dosen/{id}',
+        path: '/{id}',
         handler: deleteDosen,
     },
     {
         method: 'POST',
-        path: '/dosen',
+        path: '',
         handler: createDosen,
     },
     {
         method: 'PUT',
-        path: '/dosen/{id}',
+        path: '/{id}',
         handler: updateDosen,
     }
 ];
