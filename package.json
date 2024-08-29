@@ -13,6 +13,7 @@
   "dependencies": {
     "@hapi/hapi": "^21.3.3",
     "@hapi/jwt": "^3.2.0",
+    "dotenv": "^16.4.5",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.2",
     "pg": "^8.11.3",
