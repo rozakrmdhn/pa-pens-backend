@@ -1,6 +1,9 @@
 'use strict';
+// Plugin
 const Hapi = require('@hapi/hapi');
+
 // Include Route
+const authRoutes = require('./src/routes/authRoutes');
 const dosenRoutes = require('./src/routes/dosenRoutes');
 
 const init = async () => {
@@ -31,6 +34,7 @@ const init = async () => {
         });
     };
     // Define Prefix Route
+    prefixer(authRoutes, api, 'auth');
     prefixer(dosenRoutes, api, 'dosen');
     // Route List
     server.route(allRoutes);
