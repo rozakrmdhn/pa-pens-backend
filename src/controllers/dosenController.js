@@ -1,25 +1,15 @@
-const pool = require('../config/database')
+const pool = require('../config/config');
+const { Dosen } = require('../models');
 
 const getAllDosen = async (request, h) => {
     try {
-        const query = 'SELECT * FROM dosen ORDER BY id ASC';
-        const result = await pool.query(query);
+        const dosen = await Dosen.findAll();
 
-        const dosenResult = result.rows.map((row) => ({
-            id: row.id,
-            nama: row.nama,
-            kelamin: row.kelamin,
-            email: row.email,
-            no_hp: row.no_hp,
-            alamat: row.alamat
-        }));
-
-        const response = h.response({
-            status: 'Success',
-            data: dosenResult,
-        });
-        response.code(200);
-        return response;
+        return response = h.response({
+            status: 'success',
+            message: 'Berhasil mengambil data',
+            data: dosen,
+        }).code(200);
 
     } catch (err) {
         console.log(err);
@@ -28,25 +18,20 @@ const getAllDosen = async (request, h) => {
 
 const getDosenById = async (request, h) => {
     try {
-        const id = parseInt(request.params.id);
-        const query = 'SELECT * FROM dosen WHERE id = $1';
-        const result = await pool.query(query, [id]);
-        
-        const dosenResult = result.rows.map((row) => ({
-            id: row.id,
-            nama: row.nama,
-            kelamin: row.kelamin,
-            email: row.email,
-            no_hp: row.no_hp,
-            alamat: row.alamat
-        }));
+        const dosen = await Dosen.findByPk(request.params.id);
 
-        const response = h.response({
-            status: 'Success',
-            data: dosenResult,
-        });
-        response.code(200);
-        return response;
+        if (dosen) {
+            return response = h.response({
+                status: 'success',
+                message: 'Berhasil mengambil data',
+                data: dosen
+            }).code(200);
+        } else {
+            return response = h.response({
+                status: 'success',
+                message: 'Data tidak ditemukan'
+            }).code(404);
+        }
 
     } catch (err) {
         console.log(err);
@@ -55,16 +40,20 @@ const getDosenById = async (request, h) => {
 
 const deleteDosen = async (request, h) => {
     try {
-        const id = parseInt(request.params.id);
-        const query = 'DELETE FROM dosen WHERE id = $1';
-        const result = await pool.query(query, [id]);
+        const dosen = await Dosen.findByPk(request.params.id);
 
-        const response = h.response({
-            status: 'Success',
-            message: 'Deleted successfully'
-        })
-        response.code(200);
-        return response;
+        if (dosen) {
+            await dosen.destroy();
+            return response = h.response({
+                status: 'success',
+                message: 'Berhasil menghapus data'
+            }).code(200);
+        } else {
+            return response = h.response({
+                status: 'success',
+                message: 'Data tidak ditemukan'
+            }).code(404);
+        }
 
     } catch (err) {
         console.log(err);
@@ -74,16 +63,13 @@ const deleteDosen = async (request, h) => {
 const createDosen = async (request, h) => {
     try {
         const { nama, kelamin, email, no_hp, alamat } = request.payload;
-        const query = 'INSERT INTO dosen (nama, kelamin, email, no_hp, alamat) VALUES ($1, $2, $3, $4, $5) RETURNING *';
-        const values = [nama, kelamin, email, no_hp, alamat];
-        const result = await pool.query(query, values);
+        const dosen = await Dosen.create({ nama, kelamin, email, no_hp, alamat });
 
-        const response = h.response({
+        return response = h.response({
             status: 'Success',
-            message: 'Saved successfully'
-        })
-        response.code(200);
-        return response;
+            message: 'Saved successfully',
+            data: dosen
+        }).code(200);
         
     } catch (err) {
         console.log(err);
@@ -92,18 +78,21 @@ const createDosen = async (request, h) => {
 
 const updateDosen = async (request, h) => {
     try {
-        const id = request.params.id;
         const { nama, kelamin, email, no_hp, alamat } = request.payload;
-        const query = 'UPDATE dosen SET nama = $1, kelamin = $2, email = $3, no_hp = $4, alamat = $5 WHERE id = $6 RETURNING *';
-        const values = [nama, kelamin, email, no_hp, alamat, id];
-        const result = await pool.query(query, values);
-        
-        const response = h.response({
-            status: 'Success',
-            message: 'Updated successfully'
-        })
-        response.code(200);
-        return response;
+        const dosen = await Dosen.findByPk(request.params.id);
+
+        if (dosen) {
+            await dosen.update({ nama, kelamin, email, no_hp, alamat });
+            return response = h.response({
+                status: 'success',
+                message: 'Berhasil memperbarui data'
+            }).code(200);
+        } else {
+            return response = h.response({
+                status: 'success',
+                message: 'Data tidak ditemukan'
+            }).code(404);
+        }
 
     } catch (err) {
         console.log(err);

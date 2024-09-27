@@ -1,37 +1,29 @@
-const {
-    getAllDosen,
-    getDosenById,
-    deleteDosen,
-    createDosen,
-    updateDosen,
-} = require('../controllers/dosenController');
+const dosenController = require('../controllers/dosenController');
 
-const routes = [
+module.exports = [
     {
         method: 'GET', 
         path: '', 
-        handler: getAllDosen,
+        handler: dosenController.getAllDosen,
     },
     {
         method: 'GET',
         path: '/{id}',
-        handler: getDosenById,
+        handler: dosenController.getDosenById,
     },
     {
         method: 'DELETE',
         path: '/{id}',
-        handler: deleteDosen,
+        handler: dosenController.deleteDosen,
     },
     {
         method: 'POST',
         path: '',
-        handler: createDosen,
+        handler: dosenController.createDosen,
     },
     {
         method: 'PUT',
         path: '/{id}',
-        handler: updateDosen,
+        handler: dosenController.updateDosen,
     }
 ];
-
-module.exports = routes;

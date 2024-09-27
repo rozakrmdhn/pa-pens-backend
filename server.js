@@ -33,10 +33,12 @@ const init = async () => {
             allRoutes.push(route);
         });
     };
-    // Define Prefix Route
+
+    // Apply Prefixes to Routes
     prefixer(authRoutes, api, 'auth');
     prefixer(dosenRoutes, api, 'dosen');
-    // Route List
+
+    // Register Routes
     server.route(allRoutes);
 
     await server.start();
