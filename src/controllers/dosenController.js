@@ -62,8 +62,8 @@ const deleteDosen = async (request, h) => {
 
 const createDosen = async (request, h) => {
     try {
-        const { nama, kelamin, email, no_hp, alamat } = request.payload;
-        const dosen = await Dosen.create({ nama, kelamin, email, no_hp, alamat });
+        const { nip, nama, jenis_kelamin, email, nomor_hp, alamat } = request.payload;
+        const dosen = await Dosen.create({ nip, nama, jenis_kelamin, email, nomor_hp, alamat });
 
         return response = h.response({
             status: 'Success',
@@ -78,11 +78,11 @@ const createDosen = async (request, h) => {
 
 const updateDosen = async (request, h) => {
     try {
-        const { nama, kelamin, email, no_hp, alamat } = request.payload;
+        const { nip, nama, jenis_kelamin, email, nomor_hp, alamat } = request.payload;
         const dosen = await Dosen.findByPk(request.params.id);
 
         if (dosen) {
-            await dosen.update({ nama, kelamin, email, no_hp, alamat });
+            await dosen.update({ nip, nama, jenis_kelamin, email, nomor_hp, alamat });
             return response = h.response({
                 status: 'success',
                 message: 'Berhasil memperbarui data'
