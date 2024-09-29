@@ -1,0 +1,34 @@
+###
+GET http://localhost:5000/api/dosen
+
+###
+GET http://localhost:5000/api/dosen/4
+
+###
+DELETE http://localhost:5000/api/dosen/4
+
+###
+POST http://localhost:5000/api/dosen
+Content-Type: application/json
+
+{
+    "nip": "222222",
+    "nama": "Viki Fitria",
+    "jenis_kelamin": "Perempuan",
+    "email": "viki@gmail.com",
+    "nomor_hp": "085",
+    "alamat": "Kanor"
+}
+
+###
+PUT http://localhost:5000/api/dosen/4
+Content-Type: application/json
+
+{
+    "nip": "222222",
+    "nama": "Viki",
+    "jenis_kelamin": "Perempuan",
+    "email": "viki@gmail.com",
+    "nomor_hp": "085",
+    "alamat": "Kanor"
+}
