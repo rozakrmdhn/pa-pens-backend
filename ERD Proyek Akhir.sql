@@ -18,7 +18,6 @@ CREATE TABLE "mahasiswa" (
   "nomor_hp" varchar,
   "alamat" varchar,
   "jurusan" varchar,
-  "email" varchar,
   "createdAt" timestamp,
   "updatedAt" timestamp
 );
