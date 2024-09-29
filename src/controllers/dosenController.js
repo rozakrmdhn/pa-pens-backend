@@ -5,11 +5,19 @@ const getAllDosen = async (request, h) => {
     try {
         const dosen = await Dosen.findAll();
 
-        return response = h.response({
-            status: 'success',
-            message: 'Berhasil mengambil data',
-            data: dosen,
-        }).code(200);
+        if (dosen.length != 0) {
+            return response = h.response({
+                status: 'success',
+                message: 'Berhasil mengambil data',
+                data: dosen,
+            }).code(200);
+        } else {
+            return response = h.response({
+                status: 'success',
+                message: 'Data tidak ditemukan',
+                data: dosen,
+            }).code(200);
+        }
 
     } catch (err) {
         console.log(err);

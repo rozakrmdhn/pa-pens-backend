@@ -5,6 +5,7 @@ CREATE TABLE "dosen" (
   "jenis_kelamin" varchar,
   "nomor_hp" varchar,
   "alamat" varchar,
+  "email" varchar,
   "createdAt" timestamp,
   "updatedAt" timestamp
 );
@@ -17,6 +18,7 @@ CREATE TABLE "mahasiswa" (
   "nomor_hp" varchar,
   "alamat" varchar,
   "jurusan" varchar,
+  "email" varchar,
   "createdAt" timestamp,
   "updatedAt" timestamp
 );

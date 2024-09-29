@@ -7,6 +7,9 @@ const authRoutes = require('./src/routes/authRoutes');
 const dosenRoutes = require('./src/routes/dosenRoutes');
 
 const init = async () => {
+    const allRoutes = [];
+    const api = '/api/';
+
     const server = Hapi.server({
         port: process.env._PORT,
         host: process.env._HOST,
@@ -15,31 +18,20 @@ const init = async () => {
         }
     });
 
-    // Home Route
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: (request, h) => {
-            return 'Hello World';
-        }
-    });
-
-    // Method Prefixer Route
-    const allRoutes = [];
-    const api = '/api/';
+    //-- ROUTE MANAGE --//
+    //-- Prefixer Route --//
     const prefixer = (routeArray, apiPrefix, subRoutePrefix) => {
         routeArray.map(route => {
             route.path = `${apiPrefix}${subRoutePrefix}${route.path}`;
             allRoutes.push(route);
         });
     };
-
     // Apply Prefixes to Routes
     prefixer(authRoutes, api, 'auth');
     prefixer(dosenRoutes, api, 'dosen');
 
-    // Register Routes
     server.route(allRoutes);
+    //-- ROUTE MANAGE --//
 
     await server.start();
     console.log('Server running on %s', server.info.uri);
