@@ -1,8 +1,17 @@
-const { Daftar } = require('../models');
+const { Daftar, Mahasiswa } = require('../models');
 
 const getAllPengajuan = async (request, h) => {
     try {
-        const pengajuan = await Daftar.findAll();
+        const pengajuan = await Daftar.findAll({
+            include: [
+                {
+                    model: Mahasiswa,
+                    as: 'mahasiswa',
+                    attributes: ['nrp','nama']
+                }
+            ],
+            order: [['createdAt', 'DESC']]
+        });
         if (pengajuan.length != 0) {
             return response = h.response({
                 status: 'success',
