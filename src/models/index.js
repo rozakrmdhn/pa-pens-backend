@@ -19,5 +19,6 @@ db.sequelize = sequelize;
 
 db.Dosen = require('./dosen')(sequelize, Sequelize);
 db.Mahasiswa = require('./mahasiswa')(sequelize, Sequelize);
+db.Daftar = require('./daftar')(sequelize, Sequelize);
 
 module.exports = db;

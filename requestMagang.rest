@@ -1,0 +1,27 @@
+### CREATE
+POST http://localhost:5000/api/magang/pengajuan
+Content-Type: application/json
+
+{
+    "lama_kp": "KP3Pertama",
+    "tempat_kp": "Bappeda",
+    "alamat": "Jl. P Mas Tumapel",
+    "kota": "Bojonegoro"
+}
+
+### UPDATE BY ID
+PUT http://localhost:5000/api/magang/pengajuan/1
+Content-Type: application/json
+
+{
+    "lama_kp": "KP3Pertama",
+    "tempat_kp": "Bappeda",
+    "alamat": "Jl. P Mas Tumapel",
+    "kota": "Bojonegoro"
+}
+
+### GET BY ID
+GET http://localhost:5000/api/magang/pengajuan/1
+
+### GET
+GET http://localhost:5000/api/magang

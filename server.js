@@ -6,6 +6,7 @@ const Hapi = require('@hapi/hapi');
 const authRoutes = require('./src/routes/authRoutes');
 const dosenRoutes = require('./src/routes/dosenRoutes');
 const mahasiswaRoutes = require('./src/routes/mahasiswaRoutes');
+const magangRoutes = require('./src/routes/magangRoutes');
 
 const init = async () => {
     const allRoutes = [];
@@ -31,6 +32,7 @@ const init = async () => {
     prefixer(authRoutes, api, 'auth');
     prefixer(dosenRoutes, api, 'dosen');
     prefixer(mahasiswaRoutes, api, 'mahasiswa');
+    prefixer(magangRoutes, api, 'magang');
 
     server.route(allRoutes);
     //-- ROUTE MANAGE --//
