@@ -1,6 +1,6 @@
 'use strict';
 
-const { DataTypes } = require("sequelize");
+const { DataTypes, INTEGER } = require("sequelize");
 const { sequelize, Mahasiswa } = require(".");
 
 module.exports = (sequelize, DataTypes) => {
@@ -9,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
         tempat_kp: DataTypes.STRING,
         alamat: DataTypes.STRING,
         kota: DataTypes.STRING,
+        status_persetujuan: DataTypes.INTEGER,
         id_mahasiswa: DataTypes.INTEGER,
+        id_dosen: DataTypes.INTEGER,
     }, {
         tableName: 'daftar',
         timestamps: true,
@@ -18,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         Daftar.belongsTo(models.Mahasiswa, {
             foreignKey: 'id_mahasiswa',
             as: 'mahasiswa'
+        });
+        Daftar.belongsTo(models.Dosen, {
+            foreignKey: 'id_dosen',
+            as: 'dosen'
         });
     };
     return Daftar;

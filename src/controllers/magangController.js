@@ -1,4 +1,4 @@
-const { Daftar, Mahasiswa } = require('../models');
+const { Daftar, Mahasiswa, Dosen } = require('../models');
 
 const getAllPengajuan = async (request, h) => {
     try {
@@ -8,6 +8,11 @@ const getAllPengajuan = async (request, h) => {
                     model: Mahasiswa,
                     as: 'mahasiswa',
                     attributes: ['nrp','nama']
+                },
+                {
+                    model: Dosen,
+                    as: 'dosen',
+                    attributes: ['nip','nama']
                 }
             ],
             order: [['createdAt', 'DESC']]
@@ -33,7 +38,20 @@ const getAllPengajuan = async (request, h) => {
 
 const getPengajuanById = async (request, h) => {
     try {
-        const pengajuan = await Daftar.findByPk(request.params.id);
+        const pengajuan = await Daftar.findByPk(request.params.id, {
+            include: [
+                {
+                    model: Mahasiswa,
+                    as: 'mahasiswa',
+                    attributes: ['nrp','nama']
+                },
+                {
+                    model: Dosen,
+                    as: 'dosen',
+                    attributes: ['nip','nama']
+                }
+            ],
+        });
 
         if (pengajuan) {
             return response = h.response({

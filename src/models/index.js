@@ -24,6 +24,7 @@ db.Daftar = require('./daftar')(sequelize, Sequelize);
 
 // Associate models
 db.Daftar.associate(db);
+db.Dosen.associate(db);
 db.Mahasiswa.associate(db);
 
 module.exports = db;
