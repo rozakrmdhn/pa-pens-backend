@@ -25,3 +25,19 @@ GET http://localhost:5000/api/magang/pengajuan/1
 
 ### GET
 GET http://localhost:5000/api/magang
+
+### VERIFIKASI BY ID
+PUT http://localhost:5000/api/magang/pengajuan/1/verifikasi
+Content-Type: application/json
+
+{
+    "status_persetujuan": "1"
+}
+
+### VERIFIKASI BY ID
+PUT http://localhost:5000/api/magang/pengajuan/1/ploting
+Content-Type: application/json
+
+{
+    "id_dosen": "3"
+}

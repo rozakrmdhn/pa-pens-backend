@@ -1,0 +1,28 @@
+### GET
+GET http://localhost:5000/api/mitra
+
+### GET BY ID
+GET http://localhost:5000/api/mitra/1
+
+### DELETE BY ID
+DELETE http://localhost:5000/api/mitra/1
+
+### CREATE
+POST http://localhost:5000/api/mitra
+Content-Type: application/json
+
+{
+    "nama_mitra": "Badan Perencanaan Pembangunan Daerah",
+    "alamat": "Jl. P. Mas Tumapel No. 1 Gedung Pemkab Lt. 4",
+    "kota": "Bojonegoro"
+}
+
+### UPDATE BY ID
+PUT http://localhost:5000/api/mitra/1
+Content-Type: application/json
+
+{
+    "nama_mitra": "Badan Perencanaan Pembangunan Daerah Kab. Bojonegoro",
+    "alamat": "Jl. P. Mas Tumapel No. 1 Gedung Pemkab Lt. 4",
+    "kota": "Bojonegoro"
+}

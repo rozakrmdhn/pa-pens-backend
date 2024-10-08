@@ -7,6 +7,8 @@ const authRoutes = require('./src/routes/authRoutes');
 const dosenRoutes = require('./src/routes/dosenRoutes');
 const mahasiswaRoutes = require('./src/routes/mahasiswaRoutes');
 const magangRoutes = require('./src/routes/magangRoutes');
+const mitraRoutes = require('./src/routes/mitraRoutes');
+const anggotaRoutes = require('./src/routes/anggotaRoutes');
 
 const init = async () => {
     const allRoutes = [];
@@ -33,6 +35,8 @@ const init = async () => {
     prefixer(dosenRoutes, api, 'dosen');
     prefixer(mahasiswaRoutes, api, 'mahasiswa');
     prefixer(magangRoutes, api, 'magang');
+    prefixer(anggotaRoutes, api, 'magang');
+    prefixer(mitraRoutes, api, 'mitra');
 
     server.route(allRoutes);
     //-- ROUTE MANAGE --//

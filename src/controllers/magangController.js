@@ -1,5 +1,6 @@
 const { Daftar, Mahasiswa, Dosen } = require('../models');
 
+/* FITUR PENDAFTARAN KP ["role"="mahasiswa"] */
 const getAllPengajuan = async (request, h) => {
     try {
         const pengajuan = await Daftar.findAll({
@@ -34,7 +35,7 @@ const getAllPengajuan = async (request, h) => {
     } catch (err) {
         console.log(err);
     }
-}
+};
 
 const getPengajuanById = async (request, h) => {
     try {
@@ -73,7 +74,7 @@ const getPengajuanById = async (request, h) => {
 
 const updatePengajuan = async (request, h) => {
     try {
-        const { lama_kp, tempat_kp, alamat, kota } = request.payload;
+        const { lama_kp, tempat_kp, alamat, kota, tanggal_kp } = request.payload;
         const daftar = await Daftar.findByPk(request.params.id);
 
         if (daftar) {
@@ -92,12 +93,12 @@ const updatePengajuan = async (request, h) => {
     } catch (err) {
         console.log(err);
     }
-}
+};
 
 const createPengajuan = async (request, h) => {
     try {
-        const { lama_kp, tempat_kp, alamat, kota } = request.payload;
-        const daftar = await Daftar.create({ lama_kp, tempat_kp, alamat, kota });
+        const { lama_kp, tempat_kp, alamat, kota, tanggal_kp } = request.payload;
+        const daftar = await Daftar.create({ lama_kp, tempat_kp, alamat, kota, tanggal_kp });
 
         return response = h.response({
             status: 'Success',
@@ -108,11 +109,60 @@ const createPengajuan = async (request, h) => {
     } catch (err) {
         console.log(err);
     }
-}
+};
+
+/* FITUR VERIFIKASI KP ["role"="koordinator_kp"] */
+const verifikasiPengajuan = async (request, h) => {
+    try {
+        const { status_persetujuan } = request.payload;
+        const verifikasi = await Daftar.findByPk(request.params.id);
+
+        if (verifikasi) {
+            await verifikasi.update({ status_persetujuan });
+            return response = h.response({
+                status: 'success',
+                message: 'Pengajuan berhasil diverifikasi'
+            }).code(200);
+        } else {
+            return response = h.response({
+                status: 'success',
+                message: 'Data tidak ditemukan'
+            }).code(404);
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+const plotingDosbim = async (request, h) => {
+    try {
+        const { id_dosen } = request.payload;
+        const ploting = await Daftar.findByPk(request.params.id);
+
+        if(ploting) {
+            await ploting.update({ id_dosen });
+            return response = h.response({
+                status: 'success',
+                message: 'Ploting berhasil disimpan'
+            }).code(200);
+        } else {
+            return response = h.response({
+                status: 'success',
+                message: 'Data tidak ditemukan'
+            }).code(404);
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
+};
 
 module.exports = {
     createPengajuan,
     getAllPengajuan,
     getPengajuanById,
-    updatePengajuan
+    updatePengajuan,
+    verifikasiPengajuan,
+    plotingDosbim
 };

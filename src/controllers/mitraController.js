@@ -1,20 +1,20 @@
-const { Dosen } = require('../models');
+const { Mitra } = require('../models');
 
-const getAllDosen = async (request, h) => {
+const getAllMitra = async (request, h) => {
     try {
-        const dosen = await Dosen.findAll();
+        const mitra = await Mitra.findAll();
 
-        if (dosen.length != 0) {
+        if (mitra.length != 0) {
             return response = h.response({
                 status: 'success',
                 message: 'Berhasil mengambil data',
-                data: dosen,
+                data: mitra,
             }).code(200);
         } else {
             return response = h.response({
                 status: 'success',
                 message: 'Data tidak ditemukan',
-                data: dosen,
+                data: mitra,
             }).code(200);
         }
 
@@ -23,15 +23,15 @@ const getAllDosen = async (request, h) => {
     }
 };
 
-const getDosenById = async (request, h) => {
+const getMitraById = async (request, h) => {
     try {
-        const dosen = await Dosen.findByPk(request.params.id);
+        const mitra = await Mitra.findByPk(request.params.id);
 
-        if (dosen) {
+        if (mitra) {
             return response = h.response({
                 status: 'success',
                 message: 'Berhasil mengambil data',
-                data: dosen
+                data: mitra
             }).code(200);
         } else {
             return response = h.response({
@@ -45,12 +45,12 @@ const getDosenById = async (request, h) => {
     }
 };
 
-const deleteDosen = async (request, h) => {
+const deleteMitra = async (request, h) => {
     try {
-        const dosen = await Dosen.findByPk(request.params.id);
+        const mitra = await Mitra.findByPk(request.params.id);
 
-        if (dosen) {
-            await dosen.destroy();
+        if (mitra) {
+            await mitra.destroy();
             return response = h.response({
                 status: 'success',
                 message: 'Berhasil menghapus data'
@@ -67,15 +67,15 @@ const deleteDosen = async (request, h) => {
     }
 }
 
-const createDosen = async (request, h) => {
+const createMitra = async (request, h) => {
     try {
-        const { nip, nama, jenis_kelamin, email, nomor_hp, alamat } = request.payload;
-        const dosen = await Dosen.create({ nip, nama, jenis_kelamin, email, nomor_hp, alamat });
+        const { nama_mitra, alamat, kota } = request.payload;
+        const mitra = await Mitra.create({ nama_mitra, alamat, kota });
 
         return response = h.response({
             status: 'Success',
             message: 'Saved successfully',
-            data: dosen
+            data: mitra
         }).code(200);
         
     } catch (err) {
@@ -83,13 +83,13 @@ const createDosen = async (request, h) => {
     }
 }
 
-const updateDosen = async (request, h) => {
+const updateMitra = async (request, h) => {
     try {
-        const { nip, nama, jenis_kelamin, email, nomor_hp, alamat } = request.payload;
-        const dosen = await Dosen.findByPk(request.params.id);
+        const { nama_mitra, alamat, kota } = request.payload;
+        const mitra = await Mitra.findByPk(request.params.id);
 
-        if (dosen) {
-            await dosen.update({ nip, nama, jenis_kelamin, email, nomor_hp, alamat });
+        if (mitra) {
+            await mitra.update({ nama_mitra, alamat, kota });
             return response = h.response({
                 status: 'success',
                 message: 'Berhasil memperbarui data'
@@ -107,9 +107,9 @@ const updateDosen = async (request, h) => {
 }
 
 module.exports = {
-    getAllDosen,
-    getDosenById,
-    deleteDosen,
-    createDosen,
-    updateDosen
+    getAllMitra,
+    getMitraById,
+    deleteMitra,
+    createMitra,
+    updateMitra
 }

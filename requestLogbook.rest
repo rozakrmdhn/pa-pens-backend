@@ -1,0 +1,5 @@
+### GET
+GET http://localhost:5000/api/magang/pengajuan/1/logbook
+
+### GET
+GET http://localhost:5000/api/logbook
