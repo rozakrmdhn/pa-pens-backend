@@ -124,8 +124,8 @@ const updatePengajuan = async (request, h) => {
 
 const createPengajuan = async (request, h) => {
     try {
-        const { lama_kp, tempat_kp, alamat, kota, tanggal_kp } = request.payload;
-        const daftar = await Daftar.create({ lama_kp, tempat_kp, alamat, kota, tanggal_kp });
+        const { lama_kp, tempat_kp, alamat, kota, tanggal_kp, id_mahasiswa } = request.payload;
+        const daftar = await Daftar.create({ lama_kp, tempat_kp, alamat, kota, tanggal_kp, id_mahasiswa });
 
         return response = h.response({
             status: 'Success',
