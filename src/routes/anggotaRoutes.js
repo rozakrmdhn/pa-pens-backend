@@ -3,7 +3,7 @@ const anggotaController = require('../controllers/anggotaController');
 module.exports = [
     {
         method: 'POST',
-        path: '/pengajuan/{id_daftar}/bulk_anggota',
+        path: '/anggota/bulk',
         handler: anggotaController.createBulkAnggota
     },
     {
@@ -13,17 +13,17 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/anggota/pengajuan/{id_daftar}',
+        path: '/anggota',
         handler: anggotaController.getAllAnggota
     },
     {
         method: 'DELETE',
-        path: '/pengajuan/{id_daftar}/anggota/{id}',
+        path: '/anggota/{id}',
         handler: anggotaController.deleteAnggota
     },
     {
         method: 'GET',
-        path: '/pengajuan/{id_daftar}/query',
-        handler: anggotaController.getAnggotaByQuery
+        path: '/anggota/pengajuan/{id_daftar}/mahasiswa/{id_mahasiswa}',
+        handler: anggotaController.getAnggotaByMahasiswa
     }
 ];

@@ -1,24 +1,22 @@
 ### CREATE
-POST http://localhost:5000/api/magang/pengajuan/1/bulk_anggota
+POST http://localhost:5000/api/magang/anggota/bulk
 Content-Type: application/json
 
 {
     "mahasiswaList": [
-        { "id_mahasiswa": 1, "id_dosen": 1, "id_daftar": 1 }
+        { "id_mahasiswa": 1, "id_daftar": 1 },
+        { "id_mahasiswa": 2, "id_daftar": 1 }
     ]
 }
+
+### GET
+GET http://localhost:5000/api/magang/anggota
 
 ### GET
 GET http://localhost:5000/api/magang/anggota/25
 
 ### GET
-GET http://localhost:5000/api/magang/anggota/pengajuan/2
-
-### GET
-GET http://localhost:5000/api/magang/pengajuan/1/query?id_daftar=1
-
-### GET
-GET http://localhost:5000/api/magang/pengajuan/1/query?id_mahasiswa=2
+GET http://localhost:5000/api/magang/anggota/pengajuan/1/mahasiswa/1
 
 ### DELETE
-DELETE http://localhost:5000/api/magang/pengajuan/1/anggota/8
+DELETE http://localhost:5000/api/magang/anggota/8

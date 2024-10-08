@@ -30,5 +30,10 @@ module.exports = [
         method: 'PUT',
         path: '/pengajuan/{id}/ploting',
         handler: magangController.plotingDosbim
+    },
+    {
+        method: 'GET',
+        path: '/pengajuan/{id}/anggota',
+        handler: magangController.getAnggotaByPengajuan
     }
 ];

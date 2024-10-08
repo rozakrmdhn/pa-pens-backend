@@ -26,6 +26,9 @@ GET http://localhost:5000/api/magang/pengajuan/1
 ### GET
 GET http://localhost:5000/api/magang
 
+###
+GET http://localhost:5000/api/magang/pengajuan/1/anggota
+
 ### VERIFIKASI BY ID
 PUT http://localhost:5000/api/magang/pengajuan/1/verifikasi
 Content-Type: application/json

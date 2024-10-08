@@ -71,9 +71,7 @@ const getAnggotaById = async (request, h) => {
 
 const getAllAnggota = async (request, h) => {
     try {
-        const results = await Anggota.findAll({
-            where: { id_daftar: request.params.id_daftar }
-        });
+        const results = await Anggota.findAll();
 
         if (results.length != 0) {
             return response = h.response({
@@ -94,26 +92,29 @@ const getAllAnggota = async (request, h) => {
     }
 };
 
-const getAnggotaByQuery = async (request, h) => {
-    const { id_mahasiswa, id_daftar } = request.query;
-    
+const getAnggotaByMahasiswa = async (request, h) => {
+    // const { id_mahasiswa, id_daftar } = request.query;
     try {
         // Create the where clause based on the query parameters
-        const whereClause = {};
-        if (id_mahasiswa) {
-            whereClause.id_daftar = request.params.id_daftar;
-            whereClause.id_mahasiswa = id_mahasiswa;
-        }
-        if (id_daftar) {
-            whereClause.id_daftar = request.params.id_daftar;
-            whereClause.id_daftar = id_daftar;
-        }
+        // const whereClause = {};
+        // if (id_mahasiswa) {
+        //     whereClause.id_daftar = request.params.id_daftar;
+        //     whereClause.id_mahasiswa = request.params.id_mahasiswa;
+        // }
+        // if (id_daftar) {
+        //     whereClause.id_daftar = request.params.id_daftar;
+        //     whereClause.id_daftar = request.params.id_mahasiswa;
+        // }
 
-        console.log(whereClause);
+        // console.log(whereClause);
 
         // Fetch the data using the constructed where clause
         const results = await Anggota.findAll({
-            where: whereClause
+            // where: whereClause
+            where: {
+                id_daftar: request.params.id_daftar,
+                id_mahasiswa: request.params.id_mahasiswa
+            }
         });
 
         if (results.length != 0) {
@@ -161,6 +162,6 @@ module.exports = {
     createBulkAnggota,
     getAnggotaById,
     getAllAnggota,
-    getAnggotaByQuery,
+    getAnggotaByMahasiswa,
     deleteAnggota,
 };

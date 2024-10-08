@@ -1,4 +1,4 @@
-const { Daftar, Mahasiswa, Dosen } = require('../models');
+const { Daftar, Mahasiswa, Dosen, Anggota } = require('../models');
 
 /* FITUR PENDAFTARAN KP ["role"="mahasiswa"] */
 const getAllPengajuan = async (request, h) => {
@@ -65,6 +65,33 @@ const getPengajuanById = async (request, h) => {
                 status: 'success',
                 message: 'Data tidak ditemukan'
             }).code(404);
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+const getAnggotaByPengajuan = async (request, h) => {
+    try {
+        const results = await Anggota.findAll({
+            where: {
+                id_daftar: request.params.id
+            }
+        });
+
+        if (results.length != 0) {
+            return response = h.response({
+                status: 'success',
+                message: 'Berhasil mengambil data',
+                data: results,
+            }).code(200);
+        } else {
+            return response = h.response({
+                status: 'success',
+                message: 'Data tidak ditemukan',
+                data: results,
+            }).code(200);
         }
 
     } catch (err) {
@@ -164,5 +191,6 @@ module.exports = {
     getPengajuanById,
     updatePengajuan,
     verifikasiPengajuan,
-    plotingDosbim
+    plotingDosbim,
+    getAnggotaByPengajuan
 };
