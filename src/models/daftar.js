@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
         catatan_koordinator_kp: DataTypes.STRING,
         id_mahasiswa: DataTypes.INTEGER,
         id_dosen: DataTypes.INTEGER,
+        bulan: DataTypes.INTEGER,
+        tahun: DataTypes.INTEGER
     }, {
         tableName: 'daftar',
         timestamps: true,

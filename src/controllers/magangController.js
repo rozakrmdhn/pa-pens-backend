@@ -77,7 +77,10 @@ const getAnggotaByPengajuan = async (request, h) => {
         const results = await Anggota.findAll({
             where: {
                 id_daftar: request.params.id
-            }
+            },
+            include: [
+                { model: Mahasiswa, as: 'mahasiswa', attributes: ['nrp', 'nama'] }
+            ],
         });
 
         if (results.length != 0) {
@@ -101,11 +104,11 @@ const getAnggotaByPengajuan = async (request, h) => {
 
 const updatePengajuan = async (request, h) => {
     try {
-        const { lama_kp, tempat_kp, alamat, kota, tanggal_kp } = request.payload;
+        const { lama_kp, tempat_kp, alamat, kota, tanggal_kp, bulan, tahun } = request.payload;
         const daftar = await Daftar.findByPk(request.params.id);
 
         if (daftar) {
-            await daftar.update({ lama_kp, tempat_kp, alamat, kota });
+            await daftar.update({ lama_kp, tempat_kp, alamat, kota, tanggal_kp, bulan, tahun });
             return response = h.response({
                 status: 'success',
                 message: 'Berhasil memperbarui data'
@@ -123,15 +126,34 @@ const updatePengajuan = async (request, h) => {
 };
 
 const createPengajuan = async (request, h) => {
+    const { lama_kp, tempat_kp, alamat, kota, tanggal_kp, id_mahasiswa } = request.payload;
     try {
-        const { lama_kp, tempat_kp, alamat, kota, tanggal_kp, id_mahasiswa } = request.payload;
-        const daftar = await Daftar.create({ lama_kp, tempat_kp, alamat, kota, tanggal_kp, id_mahasiswa });
+        const cekAnggota = await Anggota.findAll({
+            where: {
+                id_mahasiswa: id_mahasiswa
+            }
+        });
 
-        return response = h.response({
-            status: 'Success',
-            message: 'Saved successfully',
-            data: daftar
-        }).code(200);
+        if (cekAnggota.length === 0) {
+            const daftar = await Daftar.create({ lama_kp, tempat_kp, alamat, kota, tanggal_kp, id_mahasiswa });
+            
+            await Anggota.create({ 
+                id_mahasiswa: daftar.id_mahasiswa,
+                id_daftar: daftar.id
+            });
+
+            return response = h.response({
+                status: 'Success',
+                message: 'Berhasil menyimpan data',
+                data: daftar
+            }).code(200);
+
+        } else {
+            return h.response({
+                status: 'Error',
+                message: 'Data already exists for this mahasiswa.',
+            }).code(400);
+        }
 
     } catch (err) {
         console.log(err);

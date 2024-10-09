@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const { Anggota } = require("../models");
 
 const createBulkAnggota = async (request, h) => {
@@ -7,39 +8,36 @@ const createBulkAnggota = async (request, h) => {
         // Check if the length of mahasiswaList exceeds 2
         if (mahasiswaList.length > 2) {
             return h.response({
-                status: 'Error',
+                status: 'error',
                 message: 'Cannot insert more than 2 records at a time'
-            }).code(400);  // Bad Request
+            }).code(400);
         }
 
         // Extract id_mahasiswa from mahasiswaList
         const idMahasiswaList = mahasiswaList.map(item => item.id_mahasiswa);
 
-        // Check for duplicate id_mahasiswa in the database
         const existingAnggota = await Anggota.findAll({
             where: {
-                id_mahasiswa: idMahasiswaList // Search for id_mahasiswa in the database
+                id_mahasiswa: idMahasiswaList
             }
         });
 
         if (existingAnggota.length > 0) {
             return h.response({
-                status: 'Error',
+                status: 'error',
                 message: 'One or more id_mahasiswa already exist in the database'
-            }).code(400);  // Bad Request
+            }).code(400);
+
+        } else {
+            const insertedRecords  = await Anggota.bulkCreate(mahasiswaList, { returning: true });
+            return response = h.response({
+                status: 'success',
+                message: 'Saved successfully',
+                data: insertedRecords
+            }).code(200);
         }
-
-        // Insert
-        const insertedRecords  = await Anggota.bulkCreate(mahasiswaList, { returning: true });
-        
-        return response = h.response({
-            status: 'Success',
-            message: 'Saved successfully',
-            data: insertedRecords
-        }).code(200);
-
+    
     } catch (err) {
-        console.log(err);
         return response = h.response({
             status: 'Error',
             message: 'Bulk insert failed'

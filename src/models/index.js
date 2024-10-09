@@ -29,5 +29,6 @@ db.Logbook = require('./logbook')(sequelize, Sequelize);
 db.Daftar.associate(db);
 db.Dosen.associate(db);
 db.Mahasiswa.associate(db);
+db.Anggota.associate(db);
 
 module.exports = db;

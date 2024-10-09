@@ -9,14 +9,14 @@ Content-Type: application/json
     ]
 }
 
-### GET
+### GET ALL
 GET http://localhost:5000/api/magang/anggota
 
-### GET
+### GET BY ID
 GET http://localhost:5000/api/magang/anggota/25
 
-### GET
+### GET BY DAFTAR & BY MHS
 GET http://localhost:5000/api/magang/anggota/pengajuan/1/mahasiswa/1
 
-### DELETE
+### DELETE BY ID
 DELETE http://localhost:5000/api/magang/anggota/8

@@ -12,7 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
     });
     Anggota.associate = function(models) {
-
+        Anggota.belongsTo(models.Mahasiswa, {
+            foreignKey: 'id_mahasiswa',
+            as: 'mahasiswa'
+        });
     };
     return Anggota;
 };
