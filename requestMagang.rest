@@ -31,11 +31,11 @@ GET http://localhost:5000/api/magang
 GET http://localhost:5000/api/magang/pengajuan/1/anggota
 
 ### VERIFIKASI BY ID
-PUT http://localhost:5000/api/magang/pengajuan/1/verifikasi
+PUT http://localhost:5000/api/magang/pengajuan/10/verifikasi
 Content-Type: application/json
 
 {
-    "status_persetujuan": "1"
+    "status_persetujuan": 0
 }
 
 ### VERIFIKASI BY ID

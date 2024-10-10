@@ -29,7 +29,7 @@ const getAllPengajuan = async (request, h) => {
                 status: 'success',
                 message: 'Data tidak ditemukan',
                 data: pengajuan,
-            }).code(200);
+            }).code(400);
         }
 
     } catch (err) {
@@ -91,10 +91,10 @@ const getAnggotaByPengajuan = async (request, h) => {
             }).code(200);
         } else {
             return response = h.response({
-                status: 'success',
+                status: 'error',
                 message: 'Data tidak ditemukan',
                 data: results,
-            }).code(200);
+            }).code(400);
         }
 
     } catch (err) {
@@ -143,14 +143,14 @@ const createPengajuan = async (request, h) => {
             });
 
             return response = h.response({
-                status: 'Success',
+                status: 'success',
                 message: 'Berhasil menyimpan data',
                 data: daftar
             }).code(200);
 
         } else {
             return h.response({
-                status: 'Error',
+                status: 'error',
                 message: 'Data already exists for this mahasiswa.',
             }).code(400);
         }
@@ -163,26 +163,37 @@ const createPengajuan = async (request, h) => {
 /* FITUR VERIFIKASI KP ["role"="koordinator_kp"] */
 const verifikasiPengajuan = async (request, h) => {
     try {
-        const { status_persetujuan } = request.payload;
+        const { status_persetujuan, catatan_koordinator_kp } = request.payload;
         const verifikasi = await Daftar.findByPk(request.params.id);
 
         if (verifikasi) {
-            await verifikasi.update({ status_persetujuan });
-            return response = h.response({
+            // Update record with new verification data
+            await verifikasi.update({ status_persetujuan, catatan_koordinator_kp });
+
+            return h.response({
                 status: 'success',
-                message: 'Pengajuan berhasil diverifikasi'
+                message: 'Pengajuan berhasil diverifikasi',
             }).code(200);
         } else {
-            return response = h.response({
-                status: 'success',
-                message: 'Data tidak ditemukan'
+            // Return 404 if the record is not found
+            return h.response({
+                status: 'error',
+                message: 'Data tidak ditemukan',
             }).code(404);
         }
 
     } catch (err) {
-        console.log(err);
+        // Log the detailed error for debugging purposes
+        console.error('Error during verification process:', err);
+
+        // Return a detailed error response for the client
+        return h.response({
+            status: 'error',
+            message: 'Internal server error occurred during verifikasi process',
+        }).code(500);
     }
 };
+
 
 const plotingDosbim = async (request, h) => {
     try {
@@ -197,7 +208,7 @@ const plotingDosbim = async (request, h) => {
             }).code(200);
         } else {
             return response = h.response({
-                status: 'success',
+                status: 'error',
                 message: 'Data tidak ditemukan'
             }).code(404);
         }
