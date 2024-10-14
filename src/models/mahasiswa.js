@@ -5,7 +5,7 @@ const { sequelize } = require(".");
 
 module.exports = (sequelize, DataTypes) => {
     const Mahasiswa = sequelize.define('Mahasiswa', {
-        nrp: DataTypes.INTEGER,
+        nrp: DataTypes.STRING,
         nama: DataTypes.STRING,
         jenis_kelamin: DataTypes.STRING,
         nomor_hp: DataTypes.STRING,

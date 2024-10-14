@@ -21,7 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
     });
     Logbook.associate = function(models) {
-
+        Logbook.belongsTo(models.Anggota, {
+            foreignKey: 'id_anggota',
+            as: 'anggota'
+        });
     };
     return Logbook;
 };

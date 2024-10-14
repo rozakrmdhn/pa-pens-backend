@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
     });
     Anggota.associate = function(models) {
+        Anggota.belongsTo(models.Daftar, { foreignKey: 'id_daftar', as: 'daftar' });
         Anggota.belongsTo(models.Mahasiswa, {
             foreignKey: 'id_mahasiswa',
             as: 'mahasiswa'

@@ -1,6 +1,6 @@
 CREATE TABLE "dosen" (
   "id" serial PRIMARY KEY,
-  "nip" integer,
+  "nip" varchar,
   "nama" varchar,
   "jenis_kelamin" varchar,
   "nomor_hp" varchar,
@@ -12,7 +12,7 @@ CREATE TABLE "dosen" (
 
 CREATE TABLE "mahasiswa" (
   "id" serial PRIMARY KEY,
-  "nrp" integer,
+  "nrp" varchar,
   "nama" varchar,
   "jenis_kelamin" varchar,
   "nomor_hp" varchar,
@@ -38,6 +38,8 @@ CREATE TABLE "daftar" (
   "alamat" varchar,
   "kota" varchar,
   "tanggal_kp" date,
+  "bulan" integer,
+  "tahun" integer,
   "status_persetujuan" integer,
   "status_dokumen" integer,
   "catatan_koordinator_kp" varchar,

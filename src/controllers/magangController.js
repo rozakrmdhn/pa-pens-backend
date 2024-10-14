@@ -27,7 +27,7 @@ const getAllPengajuan = async (request, h) => {
         } else {
             return response = h.response({
                 status: 'success',
-                message: 'Data tidak ditemukan',
+                message: 'Data Pengajuan tidak ditemukan',
                 data: pengajuan,
             }).code(400);
         }
@@ -63,7 +63,7 @@ const getPengajuanById = async (request, h) => {
         } else {
             return response = h.response({
                 status: 'success',
-                message: 'Data tidak ditemukan'
+                message: 'Data Pengajuan tidak ditemukan'
             }).code(404);
         }
 
@@ -92,7 +92,7 @@ const getAnggotaByPengajuan = async (request, h) => {
         } else {
             return response = h.response({
                 status: 'error',
-                message: 'Data tidak ditemukan',
+                message: 'Data Anggota tidak ditemukan',
                 data: results,
             }).code(400);
         }

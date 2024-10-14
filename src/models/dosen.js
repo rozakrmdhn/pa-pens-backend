@@ -5,7 +5,7 @@ const { sequelize } = require(".");
 
 module.exports = (sequelize, DataTypes) => {
     const Dosen = sequelize.define('Dosen', {
-        nip: DataTypes.INTEGER,
+        nip: DataTypes.STRING,
         nama: DataTypes.STRING,
         jenis_kelamin: DataTypes.STRING,
         email: DataTypes.STRING,

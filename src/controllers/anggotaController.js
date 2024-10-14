@@ -32,7 +32,7 @@ const createBulkAnggota = async (request, h) => {
             const insertedRecords  = await Anggota.bulkCreate(mahasiswaList, { returning: true });
             return response = h.response({
                 status: 'success',
-                message: 'Saved successfully',
+                message: 'Berhasil menambahkan Anggota',
                 data: insertedRecords
             }).code(200);
         }
@@ -58,7 +58,7 @@ const getAnggotaById = async (request, h) => {
         } else {
             return response = h.response({
                 status: 'success',
-                message: 'Data tidak ditemukan'
+                message: 'Data Anggota tidak ditemukan'
             }).code(404);
         }
 
@@ -80,7 +80,7 @@ const getAllAnggota = async (request, h) => {
         } else {
             return response = h.response({
                 status: 'success',
-                message: 'Data tidak ditemukan',
+                message: 'Data Anggota tidak ditemukan',
                 data: results,
             }).code(200);
         }
@@ -124,7 +124,7 @@ const getAnggotaByMahasiswa = async (request, h) => {
         } else {
             return response = h.response({
                 status: 'success',
-                message: 'Data tidak ditemukan',
+                message: 'Data Anggota tidak ditemukan',
                 data: results,
             }).code(200);
         }
@@ -142,12 +142,12 @@ const deleteAnggota = async (request, h) => {
             await results.destroy();
             return response = h.response({
                 status: 'success',
-                message: 'Berhasil menghapus data'
+                message: 'Berhasil menghapus data Anggota'
             }).code(200);
         } else {
             return response = h.response({
                 status: 'success',
-                message: 'Data tidak ditemukan'
+                message: 'Data Anggota tidak ditemukan'
             }).code(404);
         }
         
