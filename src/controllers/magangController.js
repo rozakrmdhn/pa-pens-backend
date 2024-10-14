@@ -126,7 +126,7 @@ const updatePengajuan = async (request, h) => {
 };
 
 const createPengajuan = async (request, h) => {
-    const { lama_kp, tempat_kp, alamat, kota, tanggal_kp, id_mahasiswa } = request.payload;
+    const { lama_kp, tempat_kp, alamat, kota, tanggal_kp, id_mahasiswa, bulan, tahun } = request.payload;
     try {
         const cekAnggota = await Anggota.findAll({
             where: {
@@ -135,7 +135,7 @@ const createPengajuan = async (request, h) => {
         });
 
         if (cekAnggota.length === 0) {
-            const daftar = await Daftar.create({ lama_kp, tempat_kp, alamat, kota, tanggal_kp, id_mahasiswa });
+            const daftar = await Daftar.create({ lama_kp, tempat_kp, alamat, kota, tanggal_kp, id_mahasiswa, bulan, tahun });
             
             await Anggota.create({ 
                 id_mahasiswa: daftar.id_mahasiswa,
