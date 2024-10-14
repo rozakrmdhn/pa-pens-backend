@@ -1,0 +1,26 @@
+### GET
+GET http://localhost:5000/api/logbook
+
+### GET Logbook By Mahasiswa
+GET http://localhost:5000/api/logbook/mahasiswa/1
+
+### POST Create Logbook 
+POST http://localhost:5000/api/logbook
+Content-Type: application/json
+
+{
+    "id_mahasiswa": 1,
+    "tanggal": "2024-10-14",
+    "jam_mulai": "08:00",
+    "jam_selesai": "16:00",
+    "kegiatan": "Test Logbook",
+    "kesesuaian_matkul_diajarkan": 0,
+    "matkul_diajarkan": null,
+    "setujui_logbook": 1,
+    "lampiran_laporan": null,
+    "lampiran_foto": null,
+    "catatan_pembimbing": null
+}
+
+### DELETE Logbook
+DELETE http://localhost:5000/api/logbook/5

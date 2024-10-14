@@ -1,6 +1,64 @@
 const { where } = require('sequelize');
 const { Logbook, Anggota, Daftar, Mahasiswa, Dosen } = require('../models');
 
+const createLogbook = async (request, h) => {
+    const {
+        id_mahasiswa,
+        tanggal, 
+        jam_mulai, 
+        jam_selesai, 
+        kegiatan, 
+        kesesuaian_matkul_diajarkan, 
+        matkul_diajarkan,
+        setujui_logbook,
+        lampiran_laporan,
+        lampiran_foto } = request.payload;
+
+    try {
+        const cekAnggota = await Anggota.findAll({
+            attributes: ['id', 'id_mahasiswa'],
+            include: [
+                {
+                    model: Daftar,
+                    as: 'daftar',
+                    attributes: ['status_persetujuan'],
+                    where: {
+                        status_persetujuan: 1
+                    }
+                }
+            ],
+            where: {
+                id_mahasiswa: id_mahasiswa
+            }
+        });
+
+        if (cekAnggota.length === 1) {
+            const id_anggota = cekAnggota[0].id;
+            const logbook = await Logbook.create({
+                id_anggota, 
+                tanggal, 
+                jam_mulai, 
+                jam_selesai, 
+                kegiatan, 
+                kesesuaian_matkul_diajarkan, 
+                matkul_diajarkan,
+                setujui_logbook,
+                lampiran_laporan,
+                lampiran_foto
+            });
+
+            return response = h.response({
+                status: 'success',
+                message: 'Berhasil menyimpan data',
+                data: logbook
+            }).code(200);
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 const getAllLogbook = async (request, h) => {
     try {
         const results = await Logbook.findAll({
@@ -139,7 +197,30 @@ const getLogbookByMahasiswa = async (request, h) => {
     }
 };
 
+const deleteLogbook = async (request, h) => {
+    try {
+        const logbook = await Logbook.findByPk(request.params.id);
+        if (logbook) {
+            await logbook.destroy();
+            return response = h.response({
+                status: 'success',
+                message: 'Berhasil menghapus data logbook'
+            }).code(200);
+        } else {
+            return response = h.response({
+                status: 'success',
+                message: 'Data logbook tidak ditemukan'
+            }).code(404);
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 module.exports = {
+    createLogbook,
     getAllLogbook,
-    getLogbookByMahasiswa
+    getLogbookByMahasiswa,
+    deleteLogbook
 }

@@ -1,5 +1,0 @@
-### GET
-GET http://localhost:5000/api/logbook
-
-### GET Logbook By Mahasiswa
-GET http://localhost:5000/api/logbook/mahasiswa/2
