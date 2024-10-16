@@ -1,5 +1,5 @@
 const { where } = require("sequelize");
-const { Anggota } = require("../models");
+const { Anggota, Mahasiswa } = require("../models");
 
 const createBulkAnggota = async (request, h) => {
     const { mahasiswaList } = request.payload;
@@ -69,7 +69,15 @@ const getAnggotaById = async (request, h) => {
 
 const getAllAnggota = async (request, h) => {
     try {
-        const results = await Anggota.findAll();
+        const results = await Anggota.findAll({
+            include: [
+                {
+                    model: Mahasiswa,
+                    as: 'mahasiswa',
+                    attributes: ['nama']
+                }
+            ]
+        });
 
         if (results.length != 0) {
             return response = h.response({

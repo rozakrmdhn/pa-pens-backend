@@ -20,5 +20,10 @@ module.exports = [
         method: 'GET',
         path: '/mahasiswa/{id_mahasiswa}',
         handler: logbookController.getLogbookByMahasiswa
+    },
+    {
+        method: 'POST',
+        path: '/mahasiswa',
+        handler: logbookController.getLogbookMahasiswa
     }
 ];

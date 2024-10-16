@@ -22,5 +22,13 @@ Content-Type: application/json
     "catatan_pembimbing": null
 }
 
+### POST Logbook By Mahasiswa
+POST http://localhost:5000/api/logbook/mahasiswa
+Content-Type: application/json
+
+{
+    "id_mahasiswa": 1
+}
+
 ### DELETE Logbook
 DELETE http://localhost:5000/api/logbook/5
