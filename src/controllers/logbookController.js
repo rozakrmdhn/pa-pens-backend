@@ -120,7 +120,7 @@ const getAllLogbook = async (request, h) => {
                 status: 'success',
                 message: 'Data Logbook tidak ditemukan',
                 data: formattedResults,
-            }).code(400);
+            }).code(404);
         }
     } catch (err) {
         console.log(err);
@@ -190,7 +190,7 @@ const getLogbookByMahasiswa = async (request, h) => {
                 status: 'success',
                 message: 'Data Logbook tidak ditemukan',
                 data: formattedResults,
-            }).code(400);
+            }).code(404);
         }
     } catch (err) {
         console.log(err);
@@ -260,7 +260,7 @@ const getLogbookMahasiswa = async (request, h) => {
                 status: 'success',
                 message: 'Data Logbook tidak ditemukan',
                 data: formattedResults,
-            }).code(400);
+            }).code(404);
         }
     } catch (err) {
         console.log(err);
