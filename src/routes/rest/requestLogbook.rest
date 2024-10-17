@@ -9,7 +9,7 @@ POST http://localhost:5000/api/logbook
 Content-Type: application/json
 
 {
-    "id_mahasiswa": 1,
+    "id_mahasiswa": 2,
     "tanggal": "2024-10-14",
     "jam_mulai": "08:00",
     "jam_selesai": "16:00",
