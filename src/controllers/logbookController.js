@@ -1,4 +1,4 @@
-const { where } = require('sequelize');
+const { where, Op, fn, col, literal } = require('sequelize');
 const { Logbook, Anggota, Daftar, Mahasiswa, Dosen } = require('../models');
 
 const createLogbook = async (request, h) => {
@@ -62,6 +62,7 @@ const createLogbook = async (request, h) => {
 const getAllLogbook = async (request, h) => {
     try {
         const results = await Logbook.findAll({
+            order: [['tanggal', 'ASC']],
             include: [
                 { 
                     model: Anggota, 
@@ -92,6 +93,7 @@ const getAllLogbook = async (request, h) => {
 
         // Formatting of the response data
         const formattedResults = results.map(logbook => ({
+            id: logbook.id,
             id_mahasiswa: logbook.anggota.mahasiswa.id,
             nama: logbook.anggota.mahasiswa.nama,
             id_dosen: logbook.anggota.daftar.dosen.id,
@@ -105,6 +107,7 @@ const getAllLogbook = async (request, h) => {
             setujui_logbook: logbook.setujui_logbook,
             lampiran_laporan: logbook.lampiran_laporan,
             lampiran_foto: logbook.lampiran_foto,
+            catatan_pembimbing: logbook.catatan_pembimbing,
             createdAt: logbook.createdAt,
             updatedAt: logbook.updatedAt
         }));
@@ -131,6 +134,7 @@ const getLogbookByMahasiswa = async (request, h) => {
     const { id_mahasiswa } = request.params;
     try {
         const results = await Logbook.findAll({
+            order: [['tanggal', 'ASC']],
             include: [
                 { 
                     model: Anggota, 
@@ -162,6 +166,7 @@ const getLogbookByMahasiswa = async (request, h) => {
 
         // Formatting of the response data
         const formattedResults = results.map(logbook => ({
+            id: logbook.id,
             id_mahasiswa: logbook.anggota.mahasiswa.id,
             nama: logbook.anggota.mahasiswa.nama,
             id_dosen: logbook.anggota.daftar.dosen.id,
@@ -175,6 +180,7 @@ const getLogbookByMahasiswa = async (request, h) => {
             setujui_logbook: logbook.setujui_logbook,
             lampiran_laporan: logbook.lampiran_laporan,
             lampiran_foto: logbook.lampiran_foto,
+            catatan_pembimbing: logbook.catatan_pembimbing,
             createdAt: logbook.createdAt,
             updatedAt: logbook.updatedAt
         }));
@@ -201,6 +207,7 @@ const getLogbookMahasiswa = async (request, h) => {
     const { id_mahasiswa } = request.payload;
     try {
         const results = await Logbook.findAll({
+            order: [['tanggal', 'ASC']],
             include: [
                 { 
                     model: Anggota, 
@@ -232,6 +239,7 @@ const getLogbookMahasiswa = async (request, h) => {
 
         // Formatting of the response data
         const formattedResults = results.map(logbook => ({
+            id: logbook.id,
             id_mahasiswa: logbook.anggota.mahasiswa.id,
             nama: logbook.anggota.mahasiswa.nama,
             id_dosen: logbook.anggota.daftar.dosen.id,
@@ -245,6 +253,7 @@ const getLogbookMahasiswa = async (request, h) => {
             setujui_logbook: logbook.setujui_logbook,
             lampiran_laporan: logbook.lampiran_laporan,
             lampiran_foto: logbook.lampiran_foto,
+            catatan_pembimbing: logbook.catatan_pembimbing,
             createdAt: logbook.createdAt,
             updatedAt: logbook.updatedAt
         }));
@@ -260,6 +269,28 @@ const getLogbookMahasiswa = async (request, h) => {
                 status: 'success',
                 message: 'Data Logbook tidak ditemukan',
                 data: formattedResults,
+            }).code(404);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+const createLogbookMonitoring = async (request, h) => {
+    try {
+        const { catatan_pembimbing } = request.payload;
+        const logbook = await Logbook.findByPk(request.params.id);
+
+        if (logbook) {
+            await logbook.update({ catatan_pembimbing });
+            return response = h.response({
+                status: 'success',
+                message: 'Berhasil melakukan monitoring'
+            }).code(200);
+        } else {
+            return response = h.response({
+                status: 'error',
+                message: 'Data tidak ditemukan'
             }).code(404);
         }
     } catch (err) {
@@ -293,5 +324,6 @@ module.exports = {
     getAllLogbook,
     getLogbookByMahasiswa,
     getLogbookMahasiswa,
+    createLogbookMonitoring,
     deleteLogbook
 }

@@ -12,7 +12,7 @@ const getAllMahasiswa = async (request, h) => {
             }).code(200);
         } else {
             return response = h.response({
-                status: 'success',
+                status: 'error',
                 message: 'Data tidak ditemukan',
                 data: mahasiswa,
             }).code(200);
@@ -52,7 +52,7 @@ const updateMahasiswa = async (request, h) => {
             }).code(200);
         } else {
             return response = h.response({
-                status: 'success',
+                status: 'error',
                 message: 'Data tidak ditemukan'
             }).code(404);
         }
@@ -74,7 +74,7 @@ const deleteMahasiswa = async (request, h) => {
             }).code(200);
         } else {
             return response = h.response({
-                status: 'success',
+                status: 'error',
                 message: 'Data tidak ditemukan'
             }).code(404);
         }
@@ -96,7 +96,7 @@ const getMahasiswaById = async (request, h) => {
             }).code(200);
         } else {
             return response = h.response({
-                status: 'success',
+                status: 'error',
                 message: 'Data tidak ditemukan'
             }).code(404);
         }
