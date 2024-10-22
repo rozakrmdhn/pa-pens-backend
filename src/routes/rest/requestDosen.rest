@@ -32,3 +32,6 @@ Content-Type: application/json
     "nomor_hp": "085",
     "alamat": "Kanor"
 }
+
+### GET PLOTING DOSEN
+GET http://localhost:5000/api/dosen/ploting

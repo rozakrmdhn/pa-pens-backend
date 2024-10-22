@@ -1,4 +1,5 @@
-const { Dosen } = require('../models');
+const { Dosen, Daftar, Mahasiswa } = require('../models');
+const { Sequelize } = require('sequelize');
 
 const getAllDosen = async (request, h) => {
     try {
@@ -106,10 +107,49 @@ const updateDosen = async (request, h) => {
     }
 }
 
+const plotingDosenList = async (request, h) => {
+    try {
+        const dosen = await Daftar.findAll({
+            raw: true,
+            attributes: [
+                'id_dosen',  // Include id_dosen to group by it
+                [Sequelize.fn('COUNT', Sequelize.col('id_dosen')), 'alokasi_dosbim'], // Count of entries per dosen
+            ],
+            include: [
+                {
+                    model: Dosen,
+                    as: 'dosen',
+                    attributes: ['id', 'nama']  // Fetching id and nama from Dosen
+                }
+            ],
+            group: ['id_dosen', 'dosen.id', 'dosen.nama'], // Grouping by id_dosen and including necessary fields
+        });
+
+
+        if (dosen.length != 0) {
+            return response = h.response({
+                status: 'success',
+                message: 'Berhasil mengambil data',
+                data: dosen,
+            }).code(200);
+        } else {
+            return response = h.response({
+                status: 'success',
+                message: 'Data tidak ditemukan',
+                data: dosen,
+            }).code(200);
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     getAllDosen,
     getDosenById,
     deleteDosen,
     createDosen,
-    updateDosen
+    updateDosen,
+    plotingDosenList
 }

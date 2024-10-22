@@ -25,5 +25,10 @@ module.exports = [
         method: 'PUT',
         path: '/{id}',
         handler: dosenController.updateDosen,
+    },
+    {
+        method: 'GET',
+        path: '/ploting',
+        handler: dosenController.plotingDosenList
     }
 ];
