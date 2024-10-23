@@ -1,7 +1,6 @@
 'use strict';
 
-const { DataTypes, INTEGER } = require("sequelize");
-const { sequelize, Mahasiswa } = require(".");
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
     const Daftar = sequelize.define('Daftar', {
