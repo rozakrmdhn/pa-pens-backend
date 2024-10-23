@@ -1,0 +1,16 @@
+###
+GET http://localhost:5000/api/wilayah/provinces
+
+###
+GET http://localhost:5000/api/wilayah/regencies/35
+
+###
+POST http://localhost:5000/api/wilayah/regencies
+Content-Type: application/json
+
+{
+    "id": "35"
+}
+
+###
+GET https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json

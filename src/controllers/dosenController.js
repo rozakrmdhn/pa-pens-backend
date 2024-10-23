@@ -1,4 +1,4 @@
-const { Dosen, Daftar, Mahasiswa } = require('../models');
+const { Dosen, Daftar, Mahasiswa, Anggota } = require('../models');
 const { Sequelize } = require('sequelize');
 
 const getAllDosen = async (request, h) => {
@@ -110,7 +110,7 @@ const updateDosen = async (request, h) => {
 const plotingDosenList = async (request, h) => {
     try {
         const dosen = await Daftar.findAll({
-            raw: true,
+            // raw: true,
             attributes: [
                 'id_dosen',  // Include id_dosen to group by it
                 [Sequelize.fn('COUNT', Sequelize.col('id_dosen')), 'alokasi_dosbim'], // Count of entries per dosen
@@ -125,18 +125,47 @@ const plotingDosenList = async (request, h) => {
             group: ['id_dosen', 'dosen.id', 'dosen.nama'], // Grouping by id_dosen and including necessary fields
         });
 
+        const result = await Dosen.findAll({
+            attributes: {
+                include: [
+                    // First subquery: Count from 'daftar' table
+                    [
+                        Sequelize.literal(`
+                            (SELECT COUNT(*)
+                            FROM daftar AS dr 
+                            WHERE dr.id_dosen = "Dosen"."id")
+                        `),
+                        'jumlah_mitra', // Alias for count from 'daftar' table
+                    ],
+                    // Second subquery: Count from 'anggota' table
+                    [
+                        Sequelize.literal(`
+                            (SELECT COUNT(*)
+                            FROM anggota AS ag
+                            JOIN daftar AS dr ON ag.id_daftar = dr.id
+                            WHERE dr.id_dosen = "Dosen"."id")
+                        `),
+                        'jumlah_mahasiswa' // Alias for count from 'anggota' table
+                    ]
+                ]
+            },
+            order: [
+                [Sequelize.literal(`(SELECT COUNT(*) FROM daftar AS dr WHERE dr.id_dosen = "Dosen"."id")`), 'DESC']
+            ]
+        });
 
-        if (dosen.length != 0) {
+
+        if (result.length != 0) {
             return response = h.response({
                 status: 'success',
                 message: 'Berhasil mengambil data',
-                data: dosen,
+                data: result,
             }).code(200);
         } else {
             return response = h.response({
                 status: 'success',
                 message: 'Data tidak ditemukan',
-                data: dosen,
+                data: result,
             }).code(200);
         }
 

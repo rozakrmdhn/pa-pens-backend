@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
     });
     Mahasiswa.associate = function(models) {
-        Mahasiswa.belongsTo(models.Daftar, {});
+        // Mahasiswa.belongsTo(models.Daftar, {});
     };
     return Mahasiswa;
 };

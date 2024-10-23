@@ -1,4 +1,4 @@
-const { Daftar, Mahasiswa, Dosen, Anggota } = require('../models');
+const { Daftar, Mahasiswa, Dosen, Anggota, Province } = require('../models');
 
 /* FITUR PENDAFTARAN KP ["role"="mahasiswa"] */
 const getAllPengajuan = async (request, h) => {
@@ -104,11 +104,11 @@ const getAnggotaByPengajuan = async (request, h) => {
 
 const updatePengajuan = async (request, h) => {
     try {
-        const { lama_kp, tempat_kp, alamat, kota, tanggal_kp, bulan, tahun } = request.payload;
+        const { lama_kp, tempat_kp, alamat, provinsi, kota, tanggal_kp, bulan, tahun } = request.payload;
         const daftar = await Daftar.findByPk(request.params.id);
 
         if (daftar) {
-            await daftar.update({ lama_kp, tempat_kp, alamat, kota, tanggal_kp, bulan, tahun });
+            await daftar.update({ lama_kp, tempat_kp, alamat, provinsi, kota, tanggal_kp, bulan, tahun });
             return response = h.response({
                 status: 'success',
                 message: 'Berhasil memperbarui data'
@@ -126,7 +126,7 @@ const updatePengajuan = async (request, h) => {
 };
 
 const createPengajuan = async (request, h) => {
-    const { lama_kp, tempat_kp, alamat, kota, tanggal_kp, id_mahasiswa, bulan, tahun } = request.payload;
+    const { lama_kp, tempat_kp, alamat, provinsi, kota, tanggal_kp, id_mahasiswa, bulan, tahun } = request.payload;
     try {
         const cekAnggota = await Anggota.findAll({
             where: {
@@ -135,7 +135,7 @@ const createPengajuan = async (request, h) => {
         });
 
         if (cekAnggota.length === 0) {
-            const daftar = await Daftar.create({ lama_kp, tempat_kp, alamat, kota, tanggal_kp, id_mahasiswa, bulan, tahun });
+            const daftar = await Daftar.create({ lama_kp, tempat_kp, alamat, provinsi, kota, tanggal_kp, id_mahasiswa, bulan, tahun });
             
             await Anggota.create({ 
                 id_mahasiswa: daftar.id_mahasiswa,

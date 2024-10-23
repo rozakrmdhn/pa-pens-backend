@@ -16,7 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
     });
     Dosen.associate = function(models) {
-        Dosen.belongsTo(models.Daftar, {});
+        Dosen.hasMany(models.Daftar, {
+            foreignKey: 'id_dosen',
+            as: 'daftar'
+        });
     };
     return Dosen;
 };

@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         lama_kp: DataTypes.STRING,
         tempat_kp: DataTypes.STRING,
         alamat: DataTypes.STRING,
+        provinsi: DataTypes.STRING,
         kota: DataTypes.STRING,
         tanggal_kp: DataTypes.DATE,
         status_persetujuan: DataTypes.INTEGER,
@@ -32,5 +33,6 @@ module.exports = (sequelize, DataTypes) => {
             as: 'dosen'
         });
     };
+    
     return Daftar;
 };

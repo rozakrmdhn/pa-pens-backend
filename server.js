@@ -10,6 +10,7 @@ const magangRoutes = require('./src/routes/magangRoutes');
 const mitraRoutes = require('./src/routes/mitraRoutes');
 const anggotaRoutes = require('./src/routes/anggotaRoutes');
 const logbookRoutes = require('./src/routes/logbookRoutes');
+const wilayahRoutes = require('./src/routes/wilayahRoutes');
 
 const init = async () => {
     const allRoutes = [];
@@ -39,6 +40,7 @@ const init = async () => {
     prefixer(anggotaRoutes, api, 'magang');
     prefixer(mitraRoutes, api, 'mitra');
     prefixer(logbookRoutes, api, 'logbook');
+    prefixer(wilayahRoutes, api, 'wilayah');
 
     server.route(allRoutes);
     //-- ROUTE MANAGE --//
