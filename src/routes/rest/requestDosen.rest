@@ -33,5 +33,5 @@ Content-Type: application/json
     "alamat": "Kanor"
 }
 
-### GET PLOTING DOSEN
+### GET LAPORAN PLOTING DOSEN
 GET http://localhost:5000/api/dosen/ploting

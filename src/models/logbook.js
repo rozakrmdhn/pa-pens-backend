@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
         setujui_logbook: DataTypes.INTEGER,
         lampiran_laporan: DataTypes.STRING,
         lampiran_foto: DataTypes.STRING,
-        catatan_pembimbing: DataTypes.STRING
+        catatan_pembimbing: DataTypes.STRING,
+        check_monitoring: DataTypes.INTEGER
     }, {
         tableName: 'logbook',
         timestamps: true,

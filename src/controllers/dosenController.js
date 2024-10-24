@@ -154,7 +154,6 @@ const plotingDosenList = async (request, h) => {
             ]
         });
 
-
         if (result.length != 0) {
             return response = h.response({
                 status: 'success',

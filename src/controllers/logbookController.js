@@ -298,8 +298,11 @@ const createLogbookMonitoring = async (request, h) => {
         const { catatan_pembimbing } = request.payload;
         const logbook = await Logbook.findByPk(request.params.id);
 
+        // check_monitoring value
+        const check_monitoring = catatan_pembimbing == null ? 0 : 1;
+
         if (logbook) {
-            await logbook.update({ catatan_pembimbing });
+            await logbook.update({ catatan_pembimbing, check_monitoring });
             return response = h.response({
                 status: 'success',
                 message: 'Berhasil melakukan monitoring'
@@ -311,7 +314,11 @@ const createLogbookMonitoring = async (request, h) => {
             }).code(404);
         }
     } catch (err) {
-        console.log(err);
+        console.error(err);
+        return h.response({
+            status: 'error',
+            message: 'Terjadi kesalahan saat melakukan monitoring'
+        }).code(500);
     }
 };
 
@@ -336,11 +343,88 @@ const deleteLogbook = async (request, h) => {
     }
 };
 
+const getLogbookMonitoring = async (request, h) => {
+    const { id_mahasiswa } = request.payload;
+    try {
+        const cekAnggota = await Anggota.findAll({
+            attributes: ['id', 'id_mahasiswa'],
+            include: [
+                {
+                    model: Daftar,
+                    as: 'daftar',
+                    attributes: ['status_persetujuan'],
+                    where: {
+                        status_persetujuan: 1
+                    }
+                }
+            ],
+            where: {
+                id_mahasiswa: id_mahasiswa
+            }
+        });
+
+        if (cekAnggota.length === 1) {
+            const results = await Logbook.findAll({
+                order: [['tanggal', 'ASC']],
+                include: [
+                    { 
+                        model: Anggota, 
+                        as: 'anggota', 
+                        attributes: ['id_mahasiswa', 'id_daftar'],
+                        include: [
+                            {
+                                model: Daftar,
+                                as: 'daftar',
+                                attributes: ['tempat_kp', 'alamat', 'kota', 'tanggal_kp'],
+                                include: [
+                                    {
+                                        model: Dosen,
+                                        as: 'dosen',
+                                        attributes: ['id','nip','nama']
+                                    }
+                                ]
+                            },
+                            {
+                                model: Mahasiswa,
+                                as: 'mahasiswa',
+                                attributes: ['id','nrp','nama'],
+                            },
+                        ],
+                        where: { id_mahasiswa: id_mahasiswa }
+                    }
+                ],
+                where: { check_monitoring: 1 }
+            });
+
+            // Formatting of the response data
+            const formattedResults = results.map(logbook => ({
+                check_monitoring: logbook.check_monitoring,
+                catatan_pembimbing: logbook.catatan_pembimbing,
+            }));
+            
+            return response = h.response({
+                status: 'success',
+                message: 'Berhasil mengambil data',
+                data: formattedResults
+            }).code(200);
+        } else {
+            return response = h.response({
+                status: 'success',
+                message: 'Kesalahan mengambil Data Logbook'
+            }).code(400);
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 module.exports = {
     createLogbook,
     getAllLogbook,
     getLogbookByMahasiswa,
     getLogbookMahasiswa,
     createLogbookMonitoring,
-    deleteLogbook
+    deleteLogbook,
+    getLogbookMonitoring
 }

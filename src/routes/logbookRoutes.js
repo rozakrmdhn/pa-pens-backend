@@ -30,5 +30,10 @@ module.exports = [
         method: 'PUT',
         path: '/monitoring/{id}',
         handler: logbookController.createLogbookMonitoring
+    },
+    {
+        method: 'POST',
+        path: '/monitoring',
+        handler: logbookController.getLogbookMonitoring
     }
 ];

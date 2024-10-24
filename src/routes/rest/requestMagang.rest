@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
     "lama_kp": "KP3Pertama",
-    "tempat_kp": "Bappeda",
+    "tempat_kp": "Badan Perencanaan Pembangunan Daerah",
     "alamat": "Jl. P Mas Tumapel",
     "kota": "Bojonegoro",
     "id_mahasiswa": 1
@@ -16,7 +16,7 @@ Content-Type: application/json
 
 {
     "lama_kp": "KP3Pertama",
-    "tempat_kp": "Bappeda",
+    "tempat_kp": "Badan Perencanaan Pembangunan Daerah",
     "alamat": "Jl. P Mas Tumapel",
     "kota": "Bojonegoro"
 }
@@ -35,7 +35,8 @@ PUT http://localhost:5000/api/magang/pengajuan/10/verifikasi
 Content-Type: application/json
 
 {
-    "status_persetujuan": 0
+    "status_persetujuan": 0,
+    "tanggal_kp": "2024-08-26"
 }
 
 ### VERIFIKASI BY ID

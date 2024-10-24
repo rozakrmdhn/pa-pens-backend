@@ -163,12 +163,12 @@ const createPengajuan = async (request, h) => {
 /* FITUR VERIFIKASI KP ["role"="koordinator_kp"] */
 const verifikasiPengajuan = async (request, h) => {
     try {
-        const { status_persetujuan, catatan_koordinator_kp } = request.payload;
+        const { status_persetujuan, catatan_koordinator_kp, tanggal_kp } = request.payload;
         const verifikasi = await Daftar.findByPk(request.params.id);
 
         if (verifikasi) {
             // Update record with new verification data
-            await verifikasi.update({ status_persetujuan, catatan_koordinator_kp });
+            await verifikasi.update({ status_persetujuan, catatan_koordinator_kp, tanggal_kp });
 
             return h.response({
                 status: 'success',
