@@ -36,7 +36,8 @@ Content-Type: application/json
 
 {
     "status_persetujuan": 0,
-    "tanggal_kp": "2024-08-26"
+    "tanggal_kp": "2024-08-26",
+    "catatan_koordinator_kp": null
 }
 
 ### VERIFIKASI BY ID
