@@ -8,16 +8,17 @@ const getAllPengajuan = async (request, h) => {
                 {
                     model: Mahasiswa,
                     as: 'mahasiswa',
-                    attributes: ['nrp','nama']
+                    attributes: ['nrp', 'nama']
                 },
                 {
                     model: Dosen,
                     as: 'dosen',
-                    attributes: ['nip','nama']
+                    attributes: ['nip', 'nama']
                 }
             ],
             order: [['createdAt', 'DESC']]
         });
+
         if (pengajuan.length != 0) {
             return response = h.response({
                 status: 'success',
@@ -40,6 +41,7 @@ const getAllPengajuan = async (request, h) => {
 const getPengajuanById = async (request, h) => {
     try {
         const pengajuan = await Daftar.findByPk(request.params.id, {
+            raw: true,
             include: [
                 {
                     model: Mahasiswa,
@@ -211,6 +213,88 @@ const plotingDosbim = async (request, h) => {
                 status: 'error',
                 message: 'Data tidak ditemukan'
             }).code(404);
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+const getAllPengajuanAggregate = async (request, h) => {
+    try {
+        const provinceResponse = await fetch(`https://emsifa.github.io/api-wilayah-indonesia/api/provinces.json`);
+        const provinceData = await provinceResponse.json();
+        const provinceMap = provinceData.reduce((acc, province) => {
+            acc[province.id] = province.name;
+            return acc;
+        }, {});
+
+        // Cache untuk kota
+        const regencyCache = {};
+
+        const pengajuan = await Daftar.findAll({
+            include: [
+                {
+                    model: Mahasiswa,
+                    as: 'mahasiswa',
+                    attributes: ['nrp', 'nama']
+                },
+                {
+                    model: Dosen,
+                    as: 'dosen',
+                    attributes: ['nip', 'nama']
+                }
+            ],
+            order: [['createdAt', 'DESC']]
+        });
+
+        // Fungsi untuk mengambil nama kota dengan caching
+        async function fetchRegencyName(regencyId) {
+            if (regencyCache[regencyId]) {
+                return regencyCache[regencyId]; // Mengambil dari cache jika ada
+            }
+
+            const regencyResponse = await fetch(`https://emsifa.github.io/api-wilayah-indonesia/api/regency/${regencyId}.json`);
+            const regencyData = await regencyResponse.json();
+
+            regencyCache[regencyId] = regencyData.name; // Simpan hasil di cache
+            return regencyData.name; // Kembalikan nama kota
+        }
+
+        const combineDataPromises = pengajuan.map(async (data) => {
+            const regencyName = await fetchRegencyName(data.regency_id);
+
+            return {
+                id: data.id,
+                lama_kp: data.lama_kp,
+                tempat_kp: data.tempat_kp,
+                tanggal_kp: data.tanggal_kp,
+                status_persetujuan: data.status_persetujuan,
+                catatan_koordinator_kp: data.catatan_koordinator_kp,
+                id_mahasiswa: data.id_mahasiswa,
+                id_dosen: data.id_dosen,
+                mahasiswa: data.mahasiswa,
+                dosen: data.dosen,
+                provinsi: provinceMap[data.province_id] || 'Provinsi tidak ditemukan',
+                kota: regencyName || 'Kota tidak ditemukan'
+            };
+        });
+
+        // Menunggu semua promise selesai sebelum menggabungkan data akhir
+        const combineData = await Promise.all(combineDataPromises);
+
+        if (pengajuan.length != 0) {
+            return response = h.response({
+                status: 'success',
+                message: 'Berhasil mengambil data',
+                data: pengajuan,
+            }).code(200);
+        } else {
+            return response = h.response({
+                status: 'success',
+                message: 'Data Pengajuan tidak ditemukan',
+                data: pengajuan,
+            }).code(400);
         }
 
     } catch (err) {
