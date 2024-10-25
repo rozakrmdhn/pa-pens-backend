@@ -25,5 +25,10 @@ module.exports = [
         method: 'GET',
         path: '/{id}',
         handler: mahasiswaController.getMahasiswaById,
+    },
+    {
+        method: 'GET',
+        path: '/sebaran',
+        handler: mahasiswaController.getSebaranMahasiswa,
     }
 ];

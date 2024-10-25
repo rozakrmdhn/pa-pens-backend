@@ -1,4 +1,5 @@
-const { Mahasiswa } = require('../models');
+const { Mahasiswa, Daftar, Anggota } = require('../models');
+const { Sequelize } = require('sequelize');
 
 const getAllMahasiswa = async (request, h) => {
     try {
@@ -15,7 +16,7 @@ const getAllMahasiswa = async (request, h) => {
                 status: 'error',
                 message: 'Data tidak ditemukan',
                 data: mahasiswa,
-            }).code(200);
+            }).code(404);
         }
 
     } catch (err) {
@@ -106,10 +107,46 @@ const getMahasiswaById = async (request, h) => {
     }
 };
 
+const getSebaranMahasiswa = async (request, h) => {
+    try {
+        const sebaran = await Anggota.findAll({
+            attributes: [
+                [Sequelize.col('daftar.provinsi'), 'provinsi'],
+                [Sequelize.col('daftar.kota'), 'kota'],
+                [Sequelize.fn('COUNT', Sequelize.col('Anggota.id')), 'jumlah_mahasiswa']
+            ],
+            include: [{
+                model: Daftar,
+                as: 'daftar',
+                attributes: [], // Tidak memerlukan atribut tambahan dari tabel Daftar selain yang dibutuhkan
+            }],
+            group: ['daftar.provinsi', 'daftar.kota']
+        });
+
+        if (sebaran.length != 0) {
+            return response = h.response({
+                status: 'success',
+                message: 'Berhasil mengambil data',
+                data: sebaran,
+            }).code(200);
+        } else {
+            return response = h.response({
+                status: 'error',
+                message: 'Data tidak ditemukan',
+                data: sebaran,
+            }).code(404);
+        }
+        
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 module.exports = {
     getAllMahasiswa,
     createMahasiswa,
     updateMahasiswa,
     deleteMahasiswa,
     getMahasiswaById,
+    getSebaranMahasiswa,
 };

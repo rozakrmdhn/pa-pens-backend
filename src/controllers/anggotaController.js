@@ -99,21 +99,7 @@ const getAllAnggota = async (request, h) => {
 };
 
 const getAnggotaByMahasiswa = async (request, h) => {
-    // const { id_mahasiswa, id_daftar } = request.query;
     try {
-        // Create the where clause based on the query parameters
-        // const whereClause = {};
-        // if (id_mahasiswa) {
-        //     whereClause.id_daftar = request.params.id_daftar;
-        //     whereClause.id_mahasiswa = request.params.id_mahasiswa;
-        // }
-        // if (id_daftar) {
-        //     whereClause.id_daftar = request.params.id_daftar;
-        //     whereClause.id_daftar = request.params.id_mahasiswa;
-        // }
-
-        // console.log(whereClause);
-
         // Fetch the data using the constructed where clause
         const results = await Anggota.findAll({
             // where: whereClause

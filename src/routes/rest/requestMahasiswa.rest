@@ -32,3 +32,6 @@ Content-Type: application/json
     "alamat": "Kanor",
     "jurusan": "Teknik Informatika"
 }
+
+### GET SEBARAN MAHASISWA BERDASARKAN WILAYAH KP
+GET http://localhost:5000/api/mahasiswa/sebaran
