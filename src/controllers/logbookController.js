@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+const { multer } = require('multer');
 const { where, Op, fn, col, literal } = require('sequelize');
 const { Logbook, Anggota, Daftar, Mahasiswa, Dosen } = require('../models');
 
@@ -12,7 +15,8 @@ const createLogbook = async (request, h) => {
         matkul_diajarkan,
         setujui_logbook,
         lampiran_laporan,
-        lampiran_foto } = request.payload;
+        lampiran_foto
+    } = request.payload;
 
     try {
         const cekAnggota = await Anggota.findAll({
@@ -54,8 +58,17 @@ const createLogbook = async (request, h) => {
             }).code(200);
         }
 
+        return h.response({
+            status: 'error',
+            message: 'Mahasiswa tidak ditemukan atau tidak disetujui'
+        }).code(404);
+
     } catch (err) {
         console.log(err);
+        return h.response({
+            status: 'error',
+            message: 'Terjadi kesalahan saat menyimpan data'
+        }).code(500);
     }
 };
 
