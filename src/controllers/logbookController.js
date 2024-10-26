@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const multer = require('multer');
 const { where, Op, fn, col, literal } = require('sequelize');
 const { Logbook, Anggota, Daftar, Mahasiswa, Dosen } = require('../models');
 
@@ -15,8 +14,30 @@ const createLogbook = async (request, h) => {
         matkul_diajarkan,
         setujui_logbook,
         lampiran_laporan,
-        lampiran_foto
+        foto
     } = request.payload;
+
+    if (foto) {
+        const fileName = `${Date.now()}_${foto.hapi.filename}`;
+        const uploadDir = path.join(__dirname, '../uploads');
+        const filePath = path.join(uploadDir, fileName);
+
+        const file = fs.createWriteStream(filePath);
+
+        file.on('error', (err) => console.error(err));
+
+        foto.pipe(file);
+
+        foto.on('end', (err) => { 
+            const ret = {
+                filename: foto.hapi.filename,
+                headers: foto.hapi.headers
+            }
+            return JSON.stringify(ret);
+        });
+
+        lampiran_foto = fileName;
+    };
 
     try {
         const cekAnggota = await Anggota.findAll({

@@ -4,7 +4,15 @@ module.exports = [
     {
         method: 'POST',
         path: '',
-        handler: logbookController.createLogbook
+        handler: logbookController.createLogbook,
+        options: {
+            payload: {
+                maxBytes: 1024 * 1024 * 5,
+                output: 'stream',
+                parse: true,
+                multipart: true
+            }
+        }
     },
     {
         method: 'GET',
