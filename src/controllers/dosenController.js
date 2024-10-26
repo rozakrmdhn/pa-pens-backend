@@ -3,7 +3,9 @@ const { Sequelize } = require('sequelize');
 
 const getAllDosen = async (request, h) => {
     try {
-        const dosen = await Dosen.findAll();
+        const dosen = await Dosen.findAll({
+            order: [['nama', 'ASC']]
+        });
 
         if (dosen.length != 0) {
             return response = h.response({

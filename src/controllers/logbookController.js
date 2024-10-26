@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { multer } = require('multer');
+const multer = require('multer');
 const { where, Op, fn, col, literal } = require('sequelize');
 const { Logbook, Anggota, Daftar, Mahasiswa, Dosen } = require('../models');
 

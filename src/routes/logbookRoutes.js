@@ -4,14 +4,7 @@ module.exports = [
     {
         method: 'POST',
         path: '',
-        handler: logbookController.createLogbook,
-        // options: {
-        //     payload: {
-        //         output: 'stream',
-        //         parse: true,
-        //         multipart: true  // Enable multipart handling for Hapi
-        //     }
-        // }
+        handler: logbookController.createLogbook
     },
     {
         method: 'GET',

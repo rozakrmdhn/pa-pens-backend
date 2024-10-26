@@ -37,6 +37,7 @@ CREATE TABLE "daftar" (
   "tempat_kp" varchar,
   "alamat" varchar,
   "kota" varchar,
+  "provinsi", varchar,
   "tanggal_kp" date,
   "bulan" integer,
   "tahun" integer,
@@ -70,6 +71,7 @@ CREATE TABLE "logbook" (
   "lampiran_laporan" varchar,
   "lampiran_foto" varchar,
   "catatan_pembimbing" varchar,
+  "check_monitoring" integer,
   "createdAt" timestamp,
   "updatedAt" timestamp
 );
