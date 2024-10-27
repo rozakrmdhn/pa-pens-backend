@@ -15,7 +15,7 @@ Content-Type: application/json
     "nip": "123456789012345678",
     "nama": "Viki Fitria, M.Pd.",
     "jenis_kelamin": "Perempuan",
-    "email": "viki@gmail.com",
+    "email": "vikifitria@gmail.com",
     "nomor_hp": "085235385077",
     "alamat": "Bojonegoro"
 }
@@ -25,12 +25,12 @@ PUT http://localhost:5000/api/dosen/5
 Content-Type: application/json
 
 {
-    "nip": "111111",
+    "nip": "123456789012345678",
     "nama": "Viki Fitria, M.Pd.",
     "jenis_kelamin": "Perempuan",
-    "email": "viki@gmail.com",
-    "nomor_hp": "085",
-    "alamat": "Kanor"
+    "email": "vikifitria@gmail.com",
+    "nomor_hp": "085235385077",
+    "alamat": "Bojonegoro"
 }
 
 ### GET LAPORAN PLOTING DOSEN

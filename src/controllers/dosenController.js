@@ -3,12 +3,15 @@ const { Sequelize } = require('sequelize');
 const Joi = require('joi');
 
 const dosenSchema = Joi.object({
+    id: Joi.number().required(),
     nip: Joi.string().pattern(/^[0-9]+$/).min(18).max(18).required().label('NIP'),
     nama: Joi.string().required().label('Nama'),
     jenis_kelamin: Joi.string().valid('Laki-Laki', 'Perempuan').required().label('Jenis Kelamin'),
     email: Joi.string().email().required().label('Email'),
     nomor_hp: Joi.string().pattern(/^[0-9]+$/).min(10).max(13).required().label('Nomor HP'),
-    alamat: Joi.string().required().label('Alamat')
+    alamat: Joi.string().required().label('Alamat'),
+    createdAt: Joi.any(),
+    updatedAt: Joi.any()
 });
 
 const validateCreateDosen = async (request, h) => {
@@ -36,6 +39,8 @@ const validateUpdateDosen = async (request, h) => {
     const { error } = dosenSchema.validate(request.payload, { abortEarly: false });
 
     if (error) {
+        const errorMessage = error.details[0].message;
+        const errorMessages__ = error.details.map(detail => detail.message);
         const errorMessages = error.details.reduce((acc, detail) => {
             const key = detail.context.key;
             acc[key] = detail.message;
@@ -45,7 +50,7 @@ const validateUpdateDosen = async (request, h) => {
         return h.response({
             status: 'error',
             message: 'Validasi Gagal',
-            errors: errorMessages
+            errors: errorMessage
         }).code(400);
     }
     return null; // Lanjutkan jika tidak ada error
@@ -157,37 +162,44 @@ const updateDosen = async (request, h) => {
 
     try {
         const { nip, nama, jenis_kelamin, email, nomor_hp, alamat } = request.payload;
-
-        // Cek duplikat email
-        const existingDosen = await Dosen.findOne({ where: { email } });
-        if (existingDosen) {
+        
+        // Cari dosen berdasarkan ID
+        const dosen = await Dosen.findByPk(request.params.id);
+        
+        if (!dosen) {
             return h.response({
                 status: 'error',
-                message: 'Email sudah terdaftar',
-                errors: { email: 'Email sudah terdaftar' } // Error khusus untuk email duplikat
-            }).code(400);
-        }
-
-        // Update data dosen jika email tidak duplikat
-        const dosen = await Dosen.findByPk(request.params.id);
-
-        if (dosen) {
-            await dosen.update({ nip, nama, jenis_kelamin, email, nomor_hp, alamat });
-            return response = h.response({
-                status: 'success',
-                message: 'Berhasil memperbarui data'
-            }).code(200);
-        } else {
-            return response = h.response({
-                status: 'success',
                 message: 'Data tidak ditemukan'
             }).code(404);
         }
 
+        // Cek jika email sudah ada di database, tetapi abaikan jika email tidak berubah
+        if (dosen.email !== email) {
+            const existingDosen = await Dosen.findOne({ where: { email } });
+            if (existingDosen) {
+                return h.response({
+                    status: 'error',
+                    message: 'Email sudah terdaftar',
+                    errors: { email: 'Email sudah terdaftar' } // Error khusus untuk email duplikat
+                }).code(400);
+            }
+        }
+
+        // Lanjutkan update jika email tidak duplikat atau tidak berubah
+        await dosen.update({ nip, nama, jenis_kelamin, email, nomor_hp, alamat });
+        return h.response({
+            status: 'success',
+            message: 'Berhasil memperbarui data'
+        }).code(200);
+        
     } catch (err) {
         console.log(err);
+        return h.response({
+            status: 'error',
+            message: 'Terjadi kesalahan pada server'
+        }).code(500);
     }
-}
+};
 
 const plotingDosenList = async (request, h) => {
     try {
