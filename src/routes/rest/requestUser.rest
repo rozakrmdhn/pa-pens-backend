@@ -1,4 +1,4 @@
-### POST
+### POST Login
 POST http://localhost:5000/api/auth/signin
 Content-Type: application/json
 
@@ -6,3 +6,7 @@ Content-Type: application/json
     "email": "user@user.com",
     "password": "password"
 }
+
+### POST Logout
+POST http://localhost:5000/api/auth/logout
+Content-Type: application/json

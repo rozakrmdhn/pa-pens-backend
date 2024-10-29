@@ -5,8 +5,6 @@ const getAllMahasiswa = async (request, h) => {
     try {
         // Access user data from the decoded JWT
         const user = request.auth.credentials; // This will contain the decoded payload
-        // Optionally log the user data to see what's included
-        console.log('Authenticated user:', user);
 
         const mahasiswa = await Mahasiswa.findAll();
 
