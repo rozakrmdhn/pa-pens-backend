@@ -76,6 +76,17 @@ CREATE TABLE "logbook" (
   "updatedAt" timestamp
 );
 
+CREATE TABLE "users" (
+  "id" serial PRIMARY KEY,
+  "email" varchar,
+  "password" varchar,
+  "role" varchar,
+  "id_mahasiswa" integer,
+  "id_dosen" integer,
+  "createdAt" timestamp,
+  "updatedAt" timestamp
+)
+
 ALTER TABLE "anggota" ADD FOREIGN KEY ("id_daftar") REFERENCES "daftar" ("id");
 
 ALTER TABLE "anggota" ADD FOREIGN KEY ("id_mahasiswa") REFERENCES "mahasiswa" ("id");
@@ -85,3 +96,7 @@ ALTER TABLE "logbook" ADD FOREIGN KEY ("id_anggota") REFERENCES "anggota" ("id")
 ALTER TABLE "daftar" ADD FOREIGN KEY ("id_mahasiswa") REFERENCES "mahasiswa" ("id");
 
 ALTER TABLE "daftar" ADD FOREIGN KEY ("id_dosen") REFERENCES "dosen" ("id");
+
+ALTER TABLE "users" ADD FOREIGN KEY ("id_mahasiswa") REFERENCES "mahasiswa" ("id") ON DELETE SET NULL;
+
+ALTER TABLE "users" ADD FOREIGN KEY ("id_dosen") REFERENCES "dosen" ("id") ON DELETE SET NULL;

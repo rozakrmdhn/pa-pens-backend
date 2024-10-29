@@ -1,9 +1,10 @@
 'use strict';
-// Plugin
+// Plugins
 const Hapi = require('@hapi/hapi');
+const authenticateJWT = require('./src/middleware/authenticate');
 
 // Include Route
-const authRoutes = require('./src/routes/authRoutes');
+const userRoute = require('./src/routes/userRoutes');
 const dosenRoutes = require('./src/routes/dosenRoutes');
 const mahasiswaRoutes = require('./src/routes/mahasiswaRoutes');
 const magangRoutes = require('./src/routes/magangRoutes');
@@ -19,10 +20,13 @@ const init = async () => {
     const server = Hapi.server({
         port: process.env._PORT,
         host: process.env._HOST,
-        'routes': {
-            'cors': true
+        routes: { 
+            cors: true 
         }
     });
+
+    // Register middleware autentikasi JWT
+    await server.register(authenticateJWT);
 
     //-- ROUTE MANAGE --//
     //-- Prefixer Route --//
@@ -32,8 +36,9 @@ const init = async () => {
             allRoutes.push(route);
         });
     };
+
     // Apply Prefixes to Routes
-    prefixer(authRoutes, api, 'auth');
+    prefixer(userRoute, api, 'auth');
     prefixer(dosenRoutes, api, 'dosen');
     prefixer(mahasiswaRoutes, api, 'mahasiswa');
     prefixer(magangRoutes, api, 'magang');

@@ -3,6 +3,11 @@ const { Sequelize } = require('sequelize');
 
 const getAllMahasiswa = async (request, h) => {
     try {
+        // Access user data from the decoded JWT
+        const user = request.auth.credentials; // This will contain the decoded payload
+        // Optionally log the user data to see what's included
+        console.log('Authenticated user:', user);
+
         const mahasiswa = await Mahasiswa.findAll();
 
         if (mahasiswa.length != 0) {
@@ -30,7 +35,7 @@ const createMahasiswa = async (request, h) => {
         const mahasiswa = await Mahasiswa.create({ nrp, nama, jenis_kelamin, nomor_hp, alamat, jurusan });
 
         return response = h.response({
-            status: 'Success',
+            status: 'success',
             message: 'Berhasil menyimpan data',
             data: mahasiswa
         }).code(200);

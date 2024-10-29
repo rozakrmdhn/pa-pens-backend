@@ -18,6 +18,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 // Load models
+db.User = require('./user')(sequelize, Sequelize);
 db.Dosen = require('./dosen')(sequelize, Sequelize);
 db.Mahasiswa = require('./mahasiswa')(sequelize, Sequelize);
 db.Mitra = require('./mitra')(sequelize, Sequelize);
@@ -26,6 +27,7 @@ db.Anggota = require('./anggota')(sequelize, Sequelize);
 db.Logbook = require('./logbook')(sequelize, Sequelize);
 
 // Associate models
+db.User.associate(db)
 db.Daftar.associate(db);
 db.Dosen.associate(db);
 db.Mahasiswa.associate(db);
