@@ -7,7 +7,7 @@ const ACCESS_TOKEN_TTL = 3600; // 1 hour in seconds
 const REFRESH_TOKEN_TTL = 1 * 24 * 3600; // 1 days in seconds
 
 const now = Math.floor(Date.now() / 1000);
-const exp = now + 900;
+const exp = now + 1800;
 
 // Generate tokens helper function
 const generateTokens = (user) => {
