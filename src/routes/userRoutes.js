@@ -12,5 +12,11 @@ module.exports = [
         path: '/logout',
         handler: userController.signOut,
         options: { auth: false },
+    },
+    {
+        method: 'POST',
+        path: '/refresh',
+        handler: userController.refreshAccessToken,
+        options: { auth: false },
     }
 ];

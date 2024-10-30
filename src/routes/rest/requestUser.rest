@@ -3,10 +3,14 @@ POST http://localhost:5000/api/auth/signin
 Content-Type: application/json
 
 {
-    "email": "user@user.com",
+    "email": "admin@admin.com",
     "password": "password"
 }
 
 ### POST Logout
 POST http://localhost:5000/api/auth/logout
+Content-Type: application/json
+
+### POST Refresh Token
+POST http://localhost:5000/api/auth/refresh
 Content-Type: application/json
