@@ -6,8 +6,7 @@ const { User } = require('../models');
 const ACCESS_TOKEN_TTL = 3600; // 1 hour in seconds
 const REFRESH_TOKEN_TTL = 1 * 24 * 3600; // 1 days in seconds
 
-const now = Math.floor(Date.now() / 1000);
-const exp = now + 1800;
+const now = Math.floor(Date.now() / 1000) + 1800;
 
 // Generate tokens helper function
 const generateTokens = (user) => {
@@ -16,8 +15,7 @@ const generateTokens = (user) => {
             id: user.id,
             id_mahasiswa: user.id_mahasiswa,
             id_dosen: user.id_dosen,
-            role: user.role,
-            exp
+            role: user.role
         },
         {
             key: process.env.JWT_SECRET,
