@@ -38,6 +38,59 @@ const getAllPengajuan = async (request, h) => {
     }
 };
 
+const getPengajuanByMahasiswa = async (request, h) => {
+    const { id_mahasiswa } = request.params;
+    try {
+        const pengajuan = await Anggota.findAll({
+            include: [
+                {
+                    model: Daftar,
+                    as: 'daftar'
+                },
+                {
+                    model: Mahasiswa,
+                    as: 'mahasiswa',
+                    attributes: ['nrp', 'nama']
+                }
+            ],
+            where: {
+                id_mahasiswa: id_mahasiswa
+            }
+        });
+
+        const formattedResults = pengajuan.map(data => ({
+            id: data.id_daftar,
+            id_mahasiswa: data.id_mahasiswa,
+            id_anggota: data.id,
+            id_dosen: data.daftar.id_dosen,
+            mahasiswa: data.mahasiswa,
+            lama_kp: data.daftar.lama_kp,
+            tempat_kp: data.daftar.tempat_kp,
+            tanggal_kp: data.daftar.tanggal_kp,
+            status_persetujuan: data.daftar.status_persetujuan,
+            status_dokumen: data.daftar.status_dokumen,
+            catatan_koordinator_kp: data.daftar.catatan_koordinator_kp
+        }));
+
+        if (pengajuan.length != 0) {
+            return response = h.response({
+                status: 'success',
+                message: 'Berhasil mengambil data',
+                data: formattedResults,
+            }).code(200);
+        } else {
+            return response = h.response({
+                status: 'success',
+                message: 'Data Pengajuan tidak ditemukan',
+                data: formattedResults,
+            }).code(400);
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 const getPengajuanById = async (request, h) => {
     try {
         const pengajuan = await Daftar.findByPk(request.params.id, {
@@ -305,6 +358,7 @@ const getAllPengajuanAggregate = async (request, h) => {
 module.exports = {
     createPengajuan,
     getAllPengajuan,
+    getPengajuanByMahasiswa,
     getPengajuanById,
     updatePengajuan,
     verifikasiPengajuan,

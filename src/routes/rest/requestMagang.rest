@@ -27,6 +27,9 @@ GET http://localhost:5000/api/magang/pengajuan/1
 ### GET
 GET http://localhost:5000/api/magang
 
+### GET Pengajuan by Mahasiswa
+GET http://localhost:5000/api/magang/pengajuan/mahasiswa/2
+
 ###
 GET http://localhost:5000/api/magang/pengajuan/1/anggota
 
