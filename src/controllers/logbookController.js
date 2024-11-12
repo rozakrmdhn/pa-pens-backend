@@ -37,7 +37,9 @@ const createLogbook = async (request, h) => {
         });
 
         lampiran_foto = fileName;
-    };
+    } else {
+        lampiran_foto = '';
+    }
 
     try {
         const cekAnggota = await Anggota.findAll({
