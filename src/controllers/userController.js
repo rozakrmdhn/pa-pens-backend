@@ -13,6 +13,7 @@ const generateTokens = (user) => {
     const accessToken = JWT.token.generate(
         {
             id: user.id,
+            nama: user.nama,
             id_mahasiswa: user.id_mahasiswa,
             id_dosen: user.id_dosen,
             role: user.role
@@ -57,6 +58,7 @@ const signIn = async (request, h) => {
         data: {
             user: {
                 id: user.id,
+                nama: user.nama,
                 id_mahasiswa: user.id_mahasiswa,
                 id_dosen: user.id_dosen,
                 role: user.role

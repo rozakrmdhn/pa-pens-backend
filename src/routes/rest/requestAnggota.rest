@@ -9,8 +9,8 @@ Content-Type: application/json
     ]
 }
 
-### GET ALL
-GET http://localhost:5000/api/magang/anggota
+### GET ALL WITH QUERY
+GET http://localhost:5000/api/magang/anggota?id_dosen=1&id_mahasiswa=1
 
 ### GET BY ID
 GET http://localhost:5000/api/magang/anggota/25

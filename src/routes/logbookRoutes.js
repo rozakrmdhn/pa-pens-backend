@@ -51,6 +51,6 @@ module.exports = [
         method: 'POST',
         path: '/monitoring',
         handler: logbookController.getLogbookMonitoring,
-        options: { auth: 'jwt', pre: [verifyRole(['admin', 'dosen'])] }
+        options: { auth: 'jwt', pre: [verifyRole(['admin', 'dosen', 'mahasiswa'])] }
     }
 ];

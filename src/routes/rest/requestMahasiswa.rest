@@ -1,8 +1,5 @@
-@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWRfbWFoYXNpc3dhIjoxLCJpZF9kb3NlbiI6bnVsbCwicm9sZSI6Im1haGFzaXN3YSIsImlhdCI6MTczMDE5MDAyMX0.xLfusT6AVAC48nWOsk3O7aZ--1fCxE2DoDFs452Yz6g
-
 ### GET
 GET http://localhost:5000/api/mahasiswa
-Authorization: Bearer {{authToken}}
 
 ### GET BY ID
 GET http://localhost:5000/api/mahasiswa/1

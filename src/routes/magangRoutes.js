@@ -6,6 +6,7 @@ module.exports = [
         method: 'POST',
         path: '/pengajuan',
         handler: magangController.createPengajuan,
+        options: { auth: false },
         options: { auth: 'jwt', pre: [verifyRole(['admin', 'mahasiswa'])] }
     },
     {
@@ -18,8 +19,8 @@ module.exports = [
         method: 'GET',
         path: '',
         handler: magangController.getAllPengajuan,
-        options: { auth: false }
-        // options: { auth: 'jwt', pre: [verifyRole(['admin', 'dosen', 'mahasiswa'])] }
+        // options: { auth: false }
+        options: { auth: 'jwt', pre: [verifyRole(['admin', 'dosen', 'mahasiswa'])] }
     },{
         method: 'GET',
         path: '/pengajuan/mahasiswa/{id_mahasiswa}',
@@ -48,7 +49,7 @@ module.exports = [
         method: 'GET',
         path: '/pengajuan/{id}/anggota',
         handler: magangController.getAnggotaByPengajuan,
-        options: { auth: false }
-        // options: { auth: 'jwt', pre: [verifyRole(['admin', 'dosen', 'mahasiswa'])] }
+        // options: { auth: false }
+        options: { auth: 'jwt', pre: [verifyRole(['admin', 'dosen', 'mahasiswa'])] }
     }
 ];

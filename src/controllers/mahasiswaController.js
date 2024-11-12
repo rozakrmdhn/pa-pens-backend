@@ -6,7 +6,16 @@ const getAllMahasiswa = async (request, h) => {
         // Access user data from the decoded JWT
         const user = request.auth.credentials; // This will contain the decoded payload
 
-        const mahasiswa = await Mahasiswa.findAll();
+        const { id_mahasiswa } = request.query;
+
+        const filter = {};
+        if (id_mahasiswa) {
+            filter.id = id_mahasiswa;
+        }
+
+        const mahasiswa = await Mahasiswa.findAll({
+            where: filter
+        });
 
         if (mahasiswa.length != 0) {
             return response = h.response({

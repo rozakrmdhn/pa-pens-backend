@@ -6,7 +6,8 @@ module.exports = [
         method: 'GET', 
         path: '', 
         handler: mahasiswaController.getAllMahasiswa,
-        options: { auth: 'jwt', pre: [verifyRole(['admin', 'dosen', 'mahasiswa'])] }
+        options: { auth: false },
+        // options: { auth: 'jwt', pre: [verifyRole(['admin', 'dosen', 'mahasiswa'])] }
     },
     {
         method: 'POST',

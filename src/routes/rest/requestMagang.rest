@@ -7,7 +7,7 @@ Content-Type: application/json
     "tempat_kp": "Badan Perencanaan Pembangunan Daerah",
     "alamat": "Jl. P Mas Tumapel",
     "kota": "Bojonegoro",
-    "id_mahasiswa": 1
+    "id_mahasiswa": 2
 }
 
 ### UPDATE BY ID

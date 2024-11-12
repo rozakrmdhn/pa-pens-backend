@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
         password: DataTypes.STRING,
         role: DataTypes.STRING,
         id_mahasiswa: DataTypes.INTEGER,
-        id_dosen: DataTypes.INTEGER
+        id_dosen: DataTypes.INTEGER,
+        nama: DataTypes.STRING
     }, {
         tableName: 'users',
         timestamps: true,

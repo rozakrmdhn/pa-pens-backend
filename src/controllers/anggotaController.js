@@ -1,5 +1,5 @@
 const { where } = require("sequelize");
-const { Anggota, Mahasiswa } = require("../models");
+const { Anggota, Mahasiswa, Daftar } = require("../models");
 
 const createBulkAnggota = async (request, h) => {
     const { mahasiswaList } = request.payload;
@@ -69,8 +69,26 @@ const getAnggotaById = async (request, h) => {
 
 const getAllAnggota = async (request, h) => {
     try {
+        // Extract the query parameter
+        const { id_mahasiswa, id_dosen } = request.query;
+
+        // Build the query filter based on provided parameters
+        const filter = {};
+        if (id_mahasiswa) {
+            filter.id_mahasiswa = id_mahasiswa;
+        }
+        if (id_dosen) {
+            filter['$daftar.id_dosen$'] = id_dosen; // Assuming `id_dosen` is related through the `Daftar` model
+        }
+
         const results = await Anggota.findAll({
+            where: filter,
             include: [
+                {
+                    model: Daftar,
+                    as: 'daftar',
+                    attributes: ['id_dosen']
+                },
                 {
                     model: Mahasiswa,
                     as: 'mahasiswa',
